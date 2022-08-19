@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공공데이터 목록</title>
+    <style>
+        body {display: flex; flex-direction: column; justify-content: center; align-items: center; width: 1000px; height: 500px; margin: 0; padding: 0; }
+        table {width: 800px;}
+        table caption {margin-bottom: 20px; font-size: 20px; font-weight: bold; text-decoration: underline;}
+        th {margin: 0; padding: 0;}
+        td {margin-left: 10px; width: 200px; text-align: center;}
+        #div1 {margin-bottom: 20px;}
+    </style>
+</head>
+<body>
+    <div id="div1">
+        <label>지역명 (예시: 남구)</label>
+        <input type="text" id="city">
+        <button id="btnPubData">가져오기</button>
+    </div>
+    <table>
+        <caption>공공데이터 목록</caption>
+        <thead>
+            <tr>
+                <th>지역</th>
+                <th>가게명</th>
+            </tr>
+        </thead>
+        <tbody id="list">
+            <!-- <tr>
+                <td>값1</td>
+                <td>값1</td>
+                <td>값1</td>
+            </tr>
+            <tr>
+                <td>값2</td>
+                <td>값2</td>
+                <td>값2</td>
+            </tr>
+            <tr>
+                <td>값3</td>
+                <td>값3</td>
+                <td>값3</td>
+            </tr> -->
+        </tbody>
+    </table>
+    <script>
+
+        const getData_h = e => {
+
+        const city = document.getElementById('city').value;
+
+        console.log(city);
+
+        const xhr = new XMLHttpRequest();
+        const method = 'GET';
+        const url = `http://localhost:9080/api/pub/json?city=${city}`;
+        xhr.open(method, url);  //request 요청 초기화
+        xhr.send(null);         //request 요청 전송
+
+        document.getElementById('list').textContent = '가져오기중...';
+
+        const async_h = e => {
+            console.log(xhr.readyState);
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                const status = xhr.status;
+                if (status === 0 || (status >= 200 && status < 400)) {
+                    //요청 성공
+                    console.log(xhr.responseText);
+                    //json문자열 => js객체
+                    jsObj = JSON.parse(xhr.responseText);
+                    console.log(jsObj);
+                    if (jsObj.header.resultCode == '00') {
+                        const getListList = list => {
+                            return  `<tr><td>${list.city}</td><td>${list.company}</td></tr>`
+                        };
+                        const html = jsObj.body.data.map(list => getListList(list)).join('');
+                        document.getElementById('list').innerHTML = html;
+                    } else {
+                        console.log('resultCode 00 아님');
+                    }
+                } else {
+                    //요청 실패
+                }
+            }
+        };
+
+        xhr.addEventListener('readystatechange', async_h);
+    }
+
+    document.getElementById('btnPubData')
+            .addEventListener('click', getData_h);
+    </script>
+</body>
+</html>

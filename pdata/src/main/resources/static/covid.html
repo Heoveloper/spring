@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="./js/xml2json.js"></script>
+</head>
+<body>
+    <div id="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>데이터 생성일</th>
+                    <th>확진자 수</th>
+                    <th>사망자 수</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2022-08-01</td>
+                    <td>1</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>2022-08-01</td>
+                    <td>1</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>2022-08-01</td>
+                    <td>1</td>
+                    <td>3</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+<script>
+    /* Javascript 샘플 코드 */
+
+
+const xhr = new XMLHttpRequest();
+const url = 'http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19GenAgeCaseInfJson'; /*URL*/
+let queryParams = '?' + encodeURIComponent('serviceKey') + '='+'bJ0AcEWnYARdHMe24EsPd77ralP%2BiRWLuhIeWgoIBgM%2F4dqlAgbS%2FilwgSiZkbkL9ojCBQHuEZI2TtoMqYzRhA%3D%3D'; /*Service Key*/
+queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
+queryParams += '&' + encodeURIComponent('startCreateDt') + '=' + encodeURIComponent('20220809'); /**/
+queryParams += '&' + encodeURIComponent('endCreateDt') + '=' + encodeURIComponent('20220810'); /**/
+xhr.open('GET', url + queryParams);
+xhr.addEventListener('readystatechange', e => {
+    if (e.target.readyState == 4) {
+        // alert(`Status: ${e.target.status} Headers: ${JSON.stringify(e.target.getAllResponseHeaders())} Body: ${e.target.responseText}`);
+
+        const xml2json = new XMLtoJSON();
+          //xml포맷 문자열 => js객체
+          const jsObj = xml2json.fromStr(e.target.responseText);
+          console.log(jsObj);
+          //console.log(jsObj.response.header);
+          //console.log(jsObj.response.body);
+          const header = jsObj.response.header;
+          const body = jsObj.response.body
+          if (getText(header.resultCode) == '00') {
+            console.log('성공');
+            const result = jsObj.response.body.items.item;
+            result.forEach((ele) => {
+              console.log(
+                `데이터생성일:${getText(ele.createDt)},
+                 확진자수:${getText(ele.confCase)},
+                 사망자자수:${getText(ele.death)}`);
+            });
+        } else {
+            console.log('실패');
+        }
+    }
+});
+
+xhr.send('');
+
+function getText(obj) {
+    return obj['#text'];
+}
+</script>
+
+</body>
+</html>

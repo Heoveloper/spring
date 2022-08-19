@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BusanTaste</title>
+    <script type="text/javascript" src="./js/xml2json.js"></script>
+  </head>
+  <body>
+    <div>
+        hi
+    </div>
+    <script>
+      /* Javascript 샘플 코드 */
+
+      const xhr = new XMLHttpRequest();
+      const url =
+        'http://apis.data.go.kr/6260000/FoodService/getFoodKr'; /*URL*/
+      let queryParams =
+        '?' +
+        encodeURIComponent('serviceKey') +
+        '=' +
+        'rWGHLB92x6jWBuF2Vi7vGCyIOqWUR5A7otp6POH1Nh9ZrU5Z%2FPg0ebD8OFZz2%2Fvx5XFDgH7o%2BKaOoIG9IVDYNw%3D%3D'; /*Service Key*/
+      queryParams +=
+        '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+      queryParams +=
+        '&' +
+        encodeURIComponent('numOfRows') +
+        '=' +
+        encodeURIComponent('10'); /**/
+      queryParams +=
+        '&' +
+        encodeURIComponent('resultType') +
+        '=' +
+        encodeURIComponent(''); /**/
+      queryParams +=
+        '&' + encodeURIComponent('UC_SEQ') + '=' + encodeURIComponent(''); /**/
+      xhr.open('GET', url + queryParams);
+      xhr.addEventListener('readystatechange', (e) => {
+        if (e.target.readyState == 4) {
+          // alert(`Status: ${e.target.status} Headers: ${JSON.stringify(e.target.getAllResponseHeaders())} Body: ${e.target.responseText}`);
+
+          const xml2json = new XMLtoJSON();
+          //xml포맷 문자열 => js객체
+          const jsObj = xml2json.fromStr(e.target.responseText);
+          console.log(jsObj);
+        //   console.log(jsObj.response.header);
+        //   console.log(jsObj.response.body);
+        //   const header = jsObj.response.header;
+        //   const body = jsObj.response.body;
+        //   if (getText(header.resultCode) == '00') {
+        //     console.log('성공');
+        //     const result = jsObj.response.body.items.item;
+        //     result.forEach((ele) => {
+        //       console.log(
+        //         `데이터생성일:${getText(ele.createDt)},
+        //          확진자수:${getText(ele.confCase)},
+        //          사망자자수:${getText(ele.death)}`
+        //       );
+        //     });
+        //   } else {
+        //     console.log('실패');
+        //   }
+        }
+      });
+
+      xhr.send('');
+
+      function getText(obj) {
+        return obj['#text'];
+      }
+    </script>
+  </body>
+</html>
