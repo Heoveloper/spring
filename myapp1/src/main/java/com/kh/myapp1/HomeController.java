@@ -48,6 +48,7 @@ public class HomeController {
 
         return "result";
     }
+
     @GetMapping("/y/{op1}/{op2}")
     public String sum2 (
         @PathVariable("op1") int operand1,
@@ -89,6 +90,7 @@ public class HomeController {
 
         return "addForm";
     }
+
     //덧셈 처리
     @PostMapping("/sum")
     public String result(
@@ -98,6 +100,7 @@ public class HomeController {
     ) {
 
         int sum = op1 + op2;
+
         model.addAttribute("op1", op1);
         model.addAttribute("op2", op2);
         model.addAttribute("result", sum);
