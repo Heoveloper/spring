@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="마감 할인 상품 소개">
+    <meta name="keywords" content="food, sale">
+    <meta name="author" content="KH 3팀">
+
+    <link rel="stylesheet" href="@{/css/common/common.css}">
+    <link rel="stylesheet" th:href="@{/css/joinCust.css}">
+    <link rel="icon" href="/member/img/icon.svg"> <!-- 탭 아이콘 변경 -->
+    <script src="https://kit.fontawesome.com/132ba309f6.js" crossorigin="anonymous"></script>
+    <title>고객회원가입</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- header -->
+        <header class="header container">
+            <nav class="top-menu content">
+                <a href="/member/join_cust.html" class="top-menu__join">회원가입</a>
+                <a href="/member/login.html" class="top-menu__login">로그인</a>
+                <a href="" class="top-menu__cs">고객센터</a>
+            </nav>
+            <div class="logo content"><a href="/member/main_nonmem.html">GR<span>EAT</span></a></div>
+            <nav class="bottom-menu content">
+                <div class="category">
+                    <ul>
+                        <li class="region-category"> 지역 선택&nbsp;&nbsp;<i class="fa-solid fa-chevron-down"> </i>
+                            <ul>
+                                <li><a href="">남구</a></li>
+                                <li><a href="">중구</a></li>
+                                <li><a href="">북구</a></li>
+                                <li><a href="">동구</a></li>
+                                <li><a href="">울주군</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="search">
+                    <input type="text" class="search__search-box" placeholder="검색어를 입력하세요.">
+                    <a href="" class="search__search-icon"><i class="fa-solid fa-magnifying-glass"></i></a>
+                </div>
+            </nav>
+            <!-- top버튼 페이지 오른쪽 하단에 위치함 -->
+            <div class="topbtn">
+                <a href="#top"><i class="fa-solid fa-angles-up"></i></a>
+            </div>
+        </header>
+        <!-- //header -->
+
+        <!-- main -->
+        <main class="main container">
+            <div class="title content">
+                <h2>회원가입</h2>
+            </div>
+            <div class="member-type content">
+                <button class="btn btn__customer" onclick="location.href='/member/join_cust.html'" ;>
+                    <label for="">고객회원</label>
+                </button>
+                <button class="btn btn__owner" onclick="location.href='/member/join_own.html'">
+                    <label for="">점주회원</label>
+                </button>
+            </div>
+            <div class="required">
+                <label><span>*</span> 필수입력사항</label>
+            </div>
+            <div class="wrap-join content">
+                <form class="join" action="">
+                    <div class="join__ele">
+                        <div class="join__ele--1"><label for="">아이디<span> *</span></label></div>
+                        <div class="join__ele--2"><input type="text" placeholder="아이디를 입력하세요."></div>
+                        <div class="join__ele--3"><button>중복확인</button></div>
+                    </div>
+                    <div class="vali__ele">
+                        <div class="vali__ele--1"></div>
+                        <div class="vali__ele--2">
+                            <p>8~15자 사이의 영문, 숫자 조합</p>
+                            <p>중복 확인 필요</p>
+                        </div>
+                        <div class="vali__ele--3"></div>
+                    </div>
+                    <div class="join__ele">
+                        <div class="join__ele--1"><label for="">비밀번호<span> *</span></label></div>
+                        <div class="join__ele--2"><input type="password" placeholder="비밀번호를 입력하세요."></div>
+                        <div class="join__ele--3"></div>
+                    </div>
+                    <div class="vali__ele">
+                        <div class="vali__ele--1"></div>
+                        <div class="vali__ele--2">
+                            <p>8~15자 사이의 영문, 숫자, 특수문자 조합</p>
+                        </div>
+                        <div class="vali__ele--3"></div>
+                    </div>
+                    <div class="join__ele">
+                        <div class="join__ele--1"><label for="">비밀번호 확인<span> *</span></label></div>
+                        <div class="join__ele--2"><input type="password" placeholder="비밀번호를 재입력하세요."></div>
+                        <div class="join__ele--3"></div>
+                    </div>
+                    <div class="vali__ele">
+                        <div class="vali__ele--1"></div>
+                        <div class="vali__ele--2">
+                            <p>비밀번호 확인 필요</p>
+                        </div>
+                        <div class="vali__ele--3"></div>
+                    </div>
+                    <div class="join__ele">
+                        <div class="join__ele--1"><label for="">이름<span> *</span></label></div>
+                        <div class="join__ele--2"><input type="text" placeholder="이름을 입력하세요."></div>
+                        <div class="join__ele--3"></div>
+                    </div>
+                    <div class="vali__ele">
+                        <div class="vali__ele--1"></div>
+                        <div class="vali__ele--2"></div>
+                        <div class="vali__ele--3"></div>
+                    </div>
+                    <div class="join__ele">
+                        <div class="join__ele--1"><label for="">닉네임<span> *</span></label></div>
+                        <div class="join__ele--2"><input type="text" placeholder="닉네임을 입력하세요."></div>
+                        <div class="join__ele--3"><button>중복확인</button></div>
+                    </div>
+                    <div class="vali__ele">
+                        <div class="vali__ele--1"></div>
+                        <div class="vali__ele--2">
+                            <p>2~8자 사이의 문자</p>
+                            <p>중복 확인 필요</p>
+                        </div>
+                        <div class="vali__ele--3"></div>
+                    </div>
+                    <div class="join__ele">
+                        <div class="join__ele--1"><label for="">이메일<span> *</span></label></div>
+                        <div class="join__ele--2"><input type="email" placeholder="이메일을 입력하세요."></div>
+                        <div class="join__ele--3"><button>인증번호 발송</button></div>
+                    </div>
+                    <div class="vali__ele">
+                        <div class="vali__ele--1"></div>
+                        <div class="vali__ele--2"></div>
+                        <div class="vali__ele--3"></div>
+                    </div>
+                    <div class="join__ele">
+                        <div class="join__ele--1"><label for="">인증번호<span> *</span></label></div>
+                        <div class="join__ele--2"><input type="text" placeholder="인증번호를 입력하세요."></div>
+                        <div class="join__ele--3"><button>인증번호 확인</button></div>
+                    </div>
+                    <div class="vali__ele">
+                        <div class="vali__ele--1"></div>
+                        <div class="vali__ele--2">
+                            <p>인증번호 입력 필요</p>
+                        </div>
+                        <div class="vali__ele--3"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="wrap-terms content">
+                <div class="title-terms">
+                    <h3>이용약관</h3>
+                </div>
+                <div class="terms">
+                    <div class="terms__ele">
+                        <div class="terms__ele--1"><input type="checkbox" name="" id=""></div>
+                        <div class="terms__ele--2"><label for="">전체 동의</label></div>
+                        <div class="terms__ele--3"><a href="" class="view-terms">약관 보기</a></div>
+                    </div>
+                    <div class="terms__ele">
+                        <div class="terms__ele--1"><input type="checkbox" name="" id=""></div>
+                        <div class="terms__ele--2"><label for="">이용약관 동의</label></div>
+                        <div class="terms__ele--3"><a href="" class="view-terms">약관 보기</a></div>
+                    </div>
+                    <div class="terms__ele">
+                        <div class="terms__ele--1"><input type="checkbox" name="" id=""></div>
+                        <div class="terms__ele--2"><label for="">개인정보 수집 동의</label></div>
+                        <div class="terms__ele--3"><a href="" class="view-terms">약관 보기</a></div>
+                    </div>
+                    <div class="terms__ele">
+                        <div class="terms__ele--1"><input type="checkbox" name="" id=""></div>
+                        <div class="terms__ele--2"><label for="">개인정보 이용 동의</label></div>
+                        <div class="terms__ele--3"><a href="" class="view-terms">약관 보기</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="wrap-join-btn content">
+                <button class="btn join-btn" onclick="location.href='/member/join_complete.html'">
+                    <label for="">가입하기</label>
+                </button>
+            </div>
+        </main>
+        <!-- //main -->
+
+        <!-- footer -->
+        <footer class="footer container">
+            <p class="content"></p>
+        </footer>
+        <!-- //footer -->
+
+    </div>
+</body>
+</html>

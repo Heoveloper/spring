@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+/* 커서: 포인터 */
+button {cursor: pointer;}
+button label {cursor: pointer;}
+
+/* 메인 구조 */
+.main {display: flex; flex-direction: column; align-items: center; text-align: center;
+       width: 700px;}
+
+/* 전체 버튼 */
+button {border: none; border-radius: 5px; background-color: var(--main-color-gre);}
+
+/* 일부 버튼 글자 굵게 */
+.member-type label, .join-btn label {font-weight: bold;}
+
+
+/* 타이틀 */
+h2 {letter-spacing: 3px; margin: 10px 0px; padding: 0px;}
+
+/* 회원유형 버튼 */
+.member-type {display: flex; justify-content: center; width: 100%;}
+.btn__customer {padding: 10px 70px; margin: 10px;  background-color: var(--main-color-yel);}
+.btn__owner {padding: 10px 70px; margin: 10px;}
+
+/* 필수입력사항 */
+.required {margin: 20px 0px 0px 600px; font-size: 12px;}
+.required label {letter-spacing: 2px;}
+.required span {color: var(--color-red);}
+
+/* 입력폼 */
+.wrap-join {width: 700px; padding: 10px 0px;}
+.wrap-join input {width: 250px; height: 30px;
+				  border: none; border-bottom: 1px solid rgb(173, 173, 173);}
+.wrap-join::before {content: ""; display: block; width: 70%; border-bottom: 1px solid #000; margin: auto;}
+.wrap-join::after {content: ""; display: block; width: 70%; border-bottom: 1px solid #000; margin: auto;}
+
+.join {margin-top: 30px; padding: 20px}
+.join input:focus {outline: none;}
+.join button {display: flex; justify-content: center; align-items: center;
+			  width: 100px; height: 30px;}
+
+.join__ele {display: inline-flex; width: 600px;}
+.join__ele--1 {display: flex; justify-content: flex-start; align-items: center;
+		 	   width: 120px; text-align: left; margin-left: 30px;}
+.join__ele--1 span {color: var(--color-red)}
+.join__ele--2 {flex: 1 1 0%;}
+.join__ele--3 {display: flex; justify-content: flex-start; align-items: center;
+               width: 150px; align-items: right;}
+
+/* 유효성검사 표시 */
+.vali__ele {display: inline-flex; width: 600px; margin-top: 5px; margin-bottom: 15px;}
+.vali__ele--1 {display: flex; justify-content: flex-start; align-items: center;
+               width: 120px; margin-left: 30px; font-size: 12px;}
+.vali__ele--2 {flex: 1 1 0%; font-size: 12px; color: var(--color-red);
+			   text-align: left; margin-left: 30px;}
+.vali__ele--3 {display: flex; justify-content: flex-start; align-items: center;
+               width: 150px; align-items: right;}
+
+/* 약관 */
+.wrap-terms {padding: 20px 0px;}
+.title-terms {font-weight: bold; letter-spacing: 3px;}
+
+.terms {padding: 15px}
+.terms__ele {display: inline-flex; width: 660px; margin: 10px auto;}
+.terms__ele--1 {width: 100px; margin-left: 150px;}
+.terms__ele--2 {flex: 1 1 0%; text-align: left;}
+.terms__ele--3 {width: 250px; text-align: left;}
+
+.view-terms {color: var(--main-color-yel); font-weight: bold; text-decoration: underline;}
+
+/* 가입하기 */
+.join-btn {padding: 10px 70px; margin-bottom: 10px; background-color: var(--main-color-yel);}
