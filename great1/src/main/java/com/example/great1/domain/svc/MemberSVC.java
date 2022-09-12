@@ -1,6 +1,7 @@
 package com.example.great1.domain.svc;
 
 import com.example.great1.domain.Member;
+import com.example.great1.domain.dao.MemberDAO;
 
 import java.util.List;
 
@@ -21,25 +22,25 @@ public interface MemberSVC {
 
     /**
      * 조회 by 회원아이디
-     * @param memberId 회원아이디
+     * @param memNumber 회원아이디
      * @return 회원정보
      */
-    Member findById(String memberId);
+    Member findById(String memNumber);
 
     /**
      * 수정
-     * @param memberId 아이디
+     * @param memNumber 회원아이디
      * @param member  수정할 정보
      * @return 수정건수
      */
-    int update(String memberId, Member member);
+    int update(String memNumber, Member member);
 
     /**
      * 탈퇴
-     * @param memberId 아이디
+     * @param memNumber 회원아이디
      * @return 삭제건수
      */
-    int del(String memberId);
+    int del(String memNumber);
 
     /**
      * 목록

@@ -49,24 +49,24 @@ public class MemberSVCImpl implements MemberSVC {
     /**
      * 조회 by 회원아이디
      *
-     * @param memberId 회원아이디
+     * @param memNumber 회원아이디
      * @return 회원정보
      */
     @Override
-    public Member findById(String memberId) {
-        return memberDAO.findById(memberId);
+    public Member findById(String memNumber) {
+        return memberDAO.findById(memNumber);
     }
 
     /**
      * 수정
      *
-     * @param memberId 아이디
+     * @param memNumber 아이디
      * @param member   수정할 정보
      * @return 수정건수
      */
     @Override
-    public int update(String memberId, Member member) {
-        int cnt = memberDAO.update(memberId, member);
+    public int update(String memNumber, Member member) {
+        int cnt = memberDAO.update(memNumber, member);
         log.info("수정건수={}", cnt);
         return cnt;
     }
@@ -74,12 +74,12 @@ public class MemberSVCImpl implements MemberSVC {
     /**
      * 탈퇴
      *
-     * @param memberId 아이디
+     * @param memNumber 회원아이디
      * @return 삭제건수
      */
     @Override
-    public int del(String memberId) {
-        int cnt = memberDAO.del(memberId);
+    public int del(String memNumber) {
+        int cnt = memberDAO.del(memNumber);
         log.info("삭제건수={}", cnt);
         return cnt;
     }

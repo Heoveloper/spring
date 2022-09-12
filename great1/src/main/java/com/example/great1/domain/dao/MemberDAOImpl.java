@@ -79,23 +79,25 @@ public class MemberDAOImpl implements MemberDAO {
     /**
      * 조회 by 회원아이디
      *
-     * @param memberId 회원아이디
+     * @param memNumber 회원아이디
      * @return 회원정보
      */
     @Override
-    public Member findById(String memberId) {
+    public Member findById(String memNumber) {
         StringBuffer sql = new StringBuffer();
 
-        sql.append("select member_id, email, pw, nickname, cdate, udate ");
+        sql.append("select mem_number, mem_type, mem_id, mem_password, mem_name, mem_nickname, mem_email, ");
+        sql.append("mem_businessnumber, mem_store_name, mem_store_phonenumber, mem_store_location, mem_store_latitude, mem_store_longitude, ");
+        sql.append("mem_store_introduce, mem_store_sns, mem_regtime, mem_lock_expiration, mem_admin ");
         sql.append("  from member ");
-        sql.append(" where member_id = ? ");
+        sql.append(" where mem_number = ? ");
 
         Member findedMember = null;
         try {
             //BeanPropertyRowMapper는 매핑되는 자바클래스에 디폴트 생성자 필수!
-            findedMember = jt.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(Member.class),memberId);
+            findedMember = jt.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(Member.class), memNumber);
         } catch (DataAccessException e) {
-            log.info("찾고자하는 회원이 없습니다!={}", memberId);
+            log.info("찾고자하는 회원이 없습니다!={}", memNumber);
         }
 
         return findedMember;
@@ -104,11 +106,11 @@ public class MemberDAOImpl implements MemberDAO {
     /**
      * 수정
      *
-     * @param memberId 아이디
+     * @param memNumber 회원아이디
      * @param member   수정할 정보
      */
     @Override
-    public int update(String memberId, Member member) {
+    public int update(String memNumber, Member member) {
         int result = 0;
         StringBuffer sql = new StringBuffer();
         sql.append("update member ");
@@ -117,21 +119,21 @@ public class MemberDAOImpl implements MemberDAO {
         sql.append("       udate = systimestamp ");
         sql.append(" where member_id = ? ");
 
-        result = jt.update(sql.toString(), member.getMemNickname(),  member.getMemPassword(), memberId);
+        result = jt.update(sql.toString(), member.getMemNickname(),  member.getMemPassword(), memNumber);
         return result;
     }
 
     /**
      * 탈퇴
      *
-     * @param memberId 아이디
+     * @param memNumber 회원아이디
      */
     @Override
-    public int del(String memberId) {
+    public int del(String memNumber) {
         int result = 0;
         String sql = "delete from member where member_id = ? ";
 
-        result = jt.update(sql, memberId);
+        result = jt.update(sql, memNumber);
         return result;
     }
 
