@@ -1,6 +1,5 @@
 package com.example.great1.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
