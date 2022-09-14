@@ -1,7 +1,6 @@
 package com.example.great1.domain.svc;
 
 import com.example.great1.domain.Member;
-import com.example.great1.domain.dao.MemberDAO;
 
 import java.util.List;
 

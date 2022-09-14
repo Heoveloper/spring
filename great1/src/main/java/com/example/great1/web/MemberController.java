@@ -31,7 +31,7 @@ public class MemberController {
     //고객회원가입 처리
     @PostMapping("/join/cust")
     public String join(
-            @Valid @ModelAttribute JoinCust joinCust,
+            @Valid @ModelAttribute("joinCust") JoinCust joinCust,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
     ) {
@@ -42,10 +42,10 @@ public class MemberController {
         member.setMemName(joinCust.getMemName());
         member.setMemNickname(joinCust.getMemNickname());
         member.setMemEmail(joinCust.getMemEmail());
-
         Member joinedMember = memberSVC.joinCust(member);
+        
         String id = joinedMember.getMemNumber();
         redirectAttributes.addAttribute("id", id);
-        return "joinComplete";  //가입완료화면
+        return "redirect:/member/{id}";  //가입완료화면
     }
 }

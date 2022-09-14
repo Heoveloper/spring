@@ -25,8 +25,10 @@ public class MemberSVCImpl implements MemberSVC {
 
         //회원 아이디 생성
         String generateCustMemberId = memberDAO.generateCustMemberId();
+
         member.setMemNumber(generateCustMemberId);
         memberDAO.joinCust(member);
+
         return memberDAO.findById(generateCustMemberId);
     }
 

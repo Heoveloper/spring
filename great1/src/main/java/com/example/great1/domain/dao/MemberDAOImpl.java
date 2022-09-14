@@ -47,9 +47,9 @@ public class MemberDAOImpl implements MemberDAO {
         int result = 0;
         StringBuffer sql = new StringBuffer();
         sql.append("insert into member (mem_number, mem_type, mem_id, mem_password, mem_name, mem_nickname, mem_email) ");
-        sql.append("values (?, 'customer', ?, ?, ?, ?, ? ");
+        sql.append("values (?, 'customer', ?, ?, ?, ?, ?) ");
 
-        result = jt.update(sql.toString(), member.getMemNumber(), member.getMemType(), member.getMemId(), member.getMemPassword(),
+        result = jt.update(sql.toString(), member.getMemNumber(), member.getMemId(), member.getMemPassword(),
                            member.getMemName(), member.getMemNickname(), member.getMemEmail());
 
         return result;
