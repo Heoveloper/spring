@@ -68,7 +68,7 @@
                 <label><span>*</span> 필수입력사항</label>
             </div>
             <div class="wrap-join content">
-                <form class="join" action="" th:object="${join}">
+                <form class="join" method="post" action="" th:object="${join}">
                     <div class="join__ele">
                         <div class="join__ele--1"><label for="">아이디<span> *</span></label></div>
                         <div class="join__ele--2"><input type="text" th:field="*{memId}" placeholder="아이디를 입력하세요."></div>
