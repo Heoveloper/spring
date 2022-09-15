@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,14 +34,14 @@ public class ApiProductControllerV3 {
         log.info("reqMsg={}", addReq);
 
         //검증
-        if (bindingResult.hasErrors()) {
-            log.info("bindingResult={}", bindingResult);
-            List<ObjectError> allErrors = bindingResult.getAllErrors();
-//            allErrors.stream().map(error -> {
-//                Arrays.stream(error.getArguments());
+//        if (bindingResult.hasErrors()) {
+//            log.info("bindingResult={}", bindingResult);
+//            Map<String, String> errmsg = new HashMap<>();
+//            bindingResult.getAllErrors().stream().map(objectError -> {
+//                errmsg.put(objectError.getCodes()[0], objectError.getDefaultMessage());
 //            });
-            return ApiResponse.createApiResMsg("99", "실패", allErrors);
-        }
+//            return ApiResponse.createApiResMsg("99", "실패", getErrMsg(bindingResult));
+//        }
 
         //AddReq->Product 변환
         Product product = new Product();
@@ -54,6 +53,9 @@ public class ApiProductControllerV3 {
         //응답메세지
         return ApiResponse.createApiResMsg("00", "성공", id);
     }
+
+    //검증 오류메세지
+//    private Map<String, String> getErrMsg()
 
     //조회 GET /api/products/{id}
     @GetMapping("/products/{id}")
