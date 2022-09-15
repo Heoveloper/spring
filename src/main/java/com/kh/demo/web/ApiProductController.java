@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@Slf4j  //log.info()
+@Slf4j //log.info()
 @Controller
-@RequiredArgsConstructor    //생성자 생성
+@RequiredArgsConstructor //생성자 생성
 public class ApiProductController {
 
     @Autowired
