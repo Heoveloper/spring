@@ -38,6 +38,7 @@ public class MemberController {
             RedirectAttributes redirectAttributes
     ) {
         Member member = new Member();
+        member.setMemType(join.getMemType());
         member.setMemId(join.getMemId());
         member.setMemPassword(join.getMemPassword());
         member.setMemName(join.getMemName());

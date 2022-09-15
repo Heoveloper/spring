@@ -38,10 +38,10 @@ public class MemberDAOImpl implements MemberDAO {
         StringBuffer sql = new StringBuffer();
         sql.append("insert into member (mem_number, mem_type, mem_id, mem_password, mem_name, mem_nickname, mem_email, ");
         sql.append(" mem_businessnumber, mem_store_name, mem_store_phonenumber, mem_store_location, mem_store_introduce, mem_store_sns) ");
-        sql.append("values (?, 'customer', ?, ?, ?, ?, ?, ");
+        sql.append("values (?, ?, ?, ?, ?, ?, ?, ");
         sql.append(" ?, ?, ?, ?, ?, ?) ");
 
-        result = jt.update(sql.toString(), member.getMemNumber(), member.getMemId(), member.getMemPassword(), member.getMemName(), member.getMemNickname(), member.getMemEmail(),
+        result = jt.update(sql.toString(), member.getMemNumber(), member.getMemType(), member.getMemId(), member.getMemPassword(), member.getMemName(), member.getMemNickname(), member.getMemEmail(),
                 member.getMemBusinessnumber(), member.getMemStoreName(), member.getMemStorePhonenumber(), member.getMemStoreLocation(), member.getMemStoreIntroduce(), member.getMemStoreSns());
 
         return result;

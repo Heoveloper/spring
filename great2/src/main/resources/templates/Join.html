@@ -58,17 +58,21 @@
             <div class="title content">
                 <h2>회원가입</h2>
             </div>
+                <form class="join" method="post" action="" th:object="${join}">
             <div class="member-type select content">
-                <input type="radio" class="select__customer" id="select--1" name="member-type__name">
-                <label for="select--1">고객회원</label>
-                <input type="radio" class="select__owner" id="select--2" name="member-type__name">
-                <label for="select--2">점주회원</label>
+                <input type="radio" value="customer" name="memType" id="select--1" class="select__customer" checked>
+                <label for="select--1">
+                    고객회원
+                </label>
+                <input type="radio" value="owner" name="memType" id="select--2" class="select__owner"  >
+                <label for="select--2">
+                    점주회원
+                </label>
             </div>
             <div class="required">
                 <label><span>*</span> 필수입력사항</label>
             </div>
             <div class="wrap-join content">
-                <form class="join" method="post" action="" th:object="${join}">
                     <div class="join__ele">
                         <div class="join__ele--1"><label for="">아이디<span> *</span></label></div>
                         <div class="join__ele--2"><input type="text" th:field="*{memId}" placeholder="아이디를 입력하세요."></div>
