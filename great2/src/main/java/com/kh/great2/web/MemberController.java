@@ -27,7 +27,7 @@ public class MemberController {
     @GetMapping("/join")
     public String join(Model model) {
         model.addAttribute("join", new Join());
-        return "join";    //고객회원가입 화면
+        return "join";    //회원가입 화면
     }
 
     //회원가입 처리
@@ -37,6 +37,15 @@ public class MemberController {
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
     ) {
+        //검증로직
+        //field error
+        if(join.getMemId().length() < 8 && join.getMemId().length() > 15) {
+
+            bindingResult.rejectValue("memId", "memIdError", "아이디 길이가 맞지 않습니다.");
+            return "join";
+        }
+
+
         Member member = new Member();
         member.setMemType(join.getMemType());
         member.setMemId(join.getMemId());

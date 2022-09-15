@@ -90,7 +90,7 @@ alter table member add constraint member_mem_store_longitude_un unique (mem_stor
 --not null
 alter table member modify mem_number constraint member_mem_number_nn not null;
 --alter table member modify mem_type constraint member_mem_type_nn not null;
-alter table member modify mem_id constraint member_mem_id_nn not null;
+--alter table member modify mem_id constraint member_mem_id_nn not null;
 alter table member modify mem_password constraint member_mem_password_nn not null;
 alter table member modify mem_name constraint member_mem_name_nn not null;
 alter table member modify mem_nickname constraint member_mem_nickname_nn not null;
