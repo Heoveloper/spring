@@ -13,7 +13,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j //log.info()
@@ -34,14 +36,10 @@ public class ApiProductControllerV3 {
         log.info("reqMsg={}", addReq);
 
         //검증
-//        if (bindingResult.hasErrors()) {
-//            log.info("bindingResult={}", bindingResult);
-//            Map<String, String> errmsg = new HashMap<>();
-//            bindingResult.getAllErrors().stream().map(objectError -> {
-//                errmsg.put(objectError.getCodes()[0], objectError.getDefaultMessage());
-//            });
-//            return ApiResponse.createApiResMsg("99", "실패", getErrMsg(bindingResult));
-//        }
+        if (bindingResult.hasErrors()) {
+            log.info("bindingResult={}", bindingResult);
+            return ApiResponse.createApiResMsg("99", "실패", getErrMsg(bindingResult));
+        }
 
         //AddReq->Product 변환
         Product product = new Product();
@@ -55,7 +53,14 @@ public class ApiProductControllerV3 {
     }
 
     //검증 오류메세지
-//    private Map<String, String> getErrMsg()
+    private Map<String, String> getErrMsg(BindingResult bindingResult) {
+        Map<String, String> errmsg = new HashMap<>();
+
+        bindingResult.getAllErrors().stream().forEach(objectError -> {
+            errmsg.put(objectError.getCodes()[0], objectError.getDefaultMessage());
+        });
+        return errmsg;
+    }
 
     //조회 GET /api/products/{id}
     @GetMapping("/products/{id}")
