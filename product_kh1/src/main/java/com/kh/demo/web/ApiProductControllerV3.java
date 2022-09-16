@@ -41,6 +41,20 @@ public class ApiProductControllerV3 {
             return ApiResponse.createApiResMsg("99", "실패", getErrMsg(bindingResult));
         }
 
+        //비즈니스 규칙
+        //필드검증
+        if (addReq.getQuantity() > 100) {
+            bindingResult.rejectValue("quantity", null, "상품수량은 1,000개를 초과할 수 없습니다.");
+        }
+        //오브젝트검증
+        if (addReq.getQuantity() * addReq.getPrice() > 10_000_000) {
+            bindingResult.reject(null, "총액은 1,000만원을 초과할 수 없습니다.");
+        }
+        if (bindingResult.hasErrors()) {
+            log.info("bindingResult={}", bindingResult);
+            return ApiResponse.createApiResMsg("99", "실패", getErrMsg(bindingResult));
+        }
+
         //AddReq->Product 변환
         Product product = new Product();
         BeanUtils.copyProperties(addReq, product);
@@ -81,24 +95,64 @@ public class ApiProductControllerV3 {
     }
 
     //수정 PATCH /api/products/{id}
+//    @PatchMapping("/products/{id}")
+//    public ApiResponse<Product> edit(@PathVariable("id") Long id, @RequestBody EditReq editReq) {
+//
+//        //검증
+//        Optional<Product> findedProduct = productSVC.findByProductId(id);
+//        if (findedProduct.isEmpty()) {
+//            return ApiResponse.createApiResMsg("99", "수정하려는 상품이 없습니다.", null);
+//        }
+//
+//        //EditReq->Product 변환
+//        Product product = new Product();
+//        BeanUtils.copyProperties(editReq, product);
+//
+//        //수정
+//        productSVC.update(id, product);
+//
+//        //응답메세지
+//        return ApiResponse.createApiResMsg("00", "성공", productSVC.findByProductId(id).get());
+//    }
+
+    //수정 PATCH /api/products/{id}
     @PatchMapping("/products/{id}")
-    public ApiResponse<Product> edit(@PathVariable("id") Long id, @RequestBody EditReq editReq) {
+    public ApiResponse<Object> edit(
+            @PathVariable("id") Long id,
+            @Valid @RequestBody EditReq editReq,
+            BindingResult bindingResult
+    ) {
+        log.info("reqMsg={}", editReq);
 
         //검증
-        Optional<Product> findedProduct = productSVC.findByProductId(id);
-        if (findedProduct.isEmpty()) {
-            return ApiResponse.createApiResMsg("99", "수정하려는 상품이 없습니다.", null);
+        if (bindingResult.hasErrors()) {
+            log.info("bindingResult={}", bindingResult);
+            return ApiResponse.createApiResMsg("99", "실패", getErrMsg(bindingResult));
         }
 
-        //EditReq->Product 변환
+        //비즈니스 규칙
+        //필드검증
+        if (editReq.getQuantity() > 100) {
+            bindingResult.rejectValue("quantity", null, "상품수량은 1,000개를 초과할 수 없습니다.");
+        }
+        //오브젝트검증
+        if (editReq.getQuantity() * editReq.getPrice() > 10_000_000) {
+            bindingResult.reject(null, "총액은 1,000만원을 초과할 수 없습니다.");
+        }
+        if (bindingResult.hasErrors()) {
+            log.info("bindingResult={}", bindingResult);
+            return ApiResponse.createApiResMsg("99", "실패", getErrMsg(bindingResult));
+        }
+
+        //AddReq->Product 변환
         Product product = new Product();
         BeanUtils.copyProperties(editReq, product);
 
-        //수정
+        //상품등록
         productSVC.update(id, product);
 
         //응답메세지
-        return ApiResponse.createApiResMsg("00", "성공", productSVC.findByProductId(id).get());
+        return ApiResponse.createApiResMsg("00", "성공", id);
     }
 
     //삭제 DELETE /api/products/{id}
