@@ -37,9 +37,15 @@ public class MemberController {
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
     ) {
-        //검증로직
+        //검증
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "join";
+        }
+
+
         //field error
-        if(join.getMemId().length() < 8 && join.getMemId().length() > 15) {
+        if(join.getMemId().length() < 8 || join.getMemId().length() > 15) {
 
             bindingResult.rejectValue("memId", "memIdError", "아이디 길이가 맞지 않습니다.");
             return "join";
