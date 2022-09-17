@@ -80,11 +80,16 @@
                         <div class="join__ele--2"><input type="text" th:field="*{memId}" placeholder="아이디를 입력하세요."></div>
                         <div class="join__ele--3"><button>중복확인</button></div>
                     </div>
-                    <ul th:if="${#fields.hasErrors('memId')}" th:class="errmsg">
+                    <div class="vali__ele">
+                        <div class="vali__ele--1"></div>
+                        <div class="vali__ele--2" id="memIdErr"></div>
+                        <div class="vali__ele--3"></div>
+                    </div>
+                    <!-- <ul th:if="${#fields.hasErrors('memId')}" th:class="errmsg">
                         <li>
                             <span th:each="err : ${#fields.errors('memId')}" th:text="|${err}|"></span>
                         </li>
-                    </ul>
+                    </ul> -->
                     <div class="join__ele">
                         <div class="join__ele--1"><label for="">비밀번호<span> *</span></label></div>
                         <div class="join__ele--2"><input type="password" th:field="*{memPassword}" placeholder="비밀번호를 입력하세요."></div>
@@ -110,11 +115,16 @@
                         <div class="join__ele--2"><input type="text" th:field="*{memEmail}" placeholder="이메일을 입력하세요."></div>
                         <div class="join__ele--3"><button>인증번호 발송</button></div>
                     </div>
-                    <ul>
+                    <div class="vali__ele">
+                        <div class="vali__ele--1"></div>
+                        <div class="vali__ele--2" id="memEmailErr"></div>
+                        <div class="vali__ele--3"></div>
+                    </div>
+                    <!-- <ul>
                         <li>
                             <span id="memEmailErr"></span>
                         </li>
-                    </ul>
+                    </ul> -->
                     <div class="join__ele">
                         <div class="join__ele--1"><label for="">인증번호<span> *</span></label></div>
                         <div class="join__ele--2"><input type="text" placeholder="인증번호를 입력하세요."></div>
@@ -193,7 +203,7 @@
         //회원가입 함수
         function join(member) {
             const url = 'http://localhost:8080/member/join';
-            fetch(url, {method: 'post', headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}, body: JSON.stringify(member)})
+            fetch(url, {method: 'POST', headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}, body: JSON.stringify(member)})
                 .then(res => res.json())
                 .then(mem => console.log('success: ', mem))
                 .catch(error => console.log('error: ', error));
@@ -201,8 +211,20 @@
 
         //검증 함수
         function validChk() {
+            //아이디 공백X
+            if (!memId.value.trim()) {
+                memIdErr.textContent = '필수 입력항목입니다.'
+                if(!memIdErr.classList.contains('fieldError')) {
+                    memIdErr.classList.add('fieldError');
+                }
+            } else {
+                memIdErr.textContent = '';
+                memIdErr.classList.remove('fieldError');
+            }
+
+            //이메일 공백X
             if (!memEmail.value.trim()) {
-                memEmailErr.textContent = '필수 필드입니다.'
+                memEmailErr.textContent = '필수 입력항목입니다.'
                 if(!memEmailErr.classList.contains('fieldError')) {
                     memEmailErr.classList.add('fieldError');
                 }
@@ -210,6 +232,20 @@
                 memEmailErr.textContent = '';
                 memEmailErr.classList.remove('fieldError');
             }
+
+            //이메일 형식
+            const regExp = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
+            if (memEmail.value.match(regExp) == null) {
+                memEmailErr.textContent = '이메일 형식에 맞지 않습니다.'
+                if(!memEmailErr.classList.contains('fieldError')) {
+                    memEmailErr.classList.add('fieldError');
+                }
+            } else {
+                memEmailErr.textContent = '';
+                memEmailErr.classList.remove('fieldError');
+            }
+            
+            
             return true;
         }
     </script>
