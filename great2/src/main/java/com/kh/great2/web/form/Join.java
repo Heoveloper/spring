@@ -2,6 +2,7 @@ package com.kh.great2.web.form;
 
 import lombok.Data;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
@@ -15,6 +16,8 @@ public class Join {
     private String memPasswordCheck;
     private String memName;                     //varchar2(18)
     private String memNickname;                 //varchar2(18)
+    @Email(message = "이메일 형식이 아닙니다.")
+    @NotBlank
     private String memEmail;                    //varchar2(30)
     private LocalDateTime memRegtime;           //date
     private LocalDateTime memLockExpiration;    //date

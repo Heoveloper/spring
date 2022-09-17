@@ -15,6 +15,13 @@
     <script src="https://kit.fontawesome.com/132ba309f6.js" crossorigin="anonymous"></script>
     <script th:src="@{/js/join2.js}"></script>
     <title>회원가입</title>
+    <style>
+        .fieldError {
+            color: red;
+            font-weight: bold;
+            font-size: 0.8em;
+        }
+    </style>
 </head>
 
 <body>
@@ -73,78 +80,46 @@
                         <div class="join__ele--1"><label for="">아이디<span> *</span></label></div>
                         <div class="join__ele--2"><input type="text" th:field="*{memId}" placeholder="아이디를 입력하세요."></div>
                         <div class="join__ele--3"><button>중복확인</button></div>
-                    <ul th:if="${#fields.hasErrors('memId')}" th:class="errmsg">
-                        <li th:each="err : ${#fields.errors('memId')}" th:text="|${err}|" />
-                    </ul>
                     </div>
+                    <ul th:if="${#fields.hasErrors('memId')}" th:class="errmsg">
+                        <li>
+                            <span th:each="err : ${#fields.errors('memId')}" th:text="|${err}|"></span>
+                        </li>
+                    </ul>
                     <div class="join__ele">
                         <div class="join__ele--1"><label for="">비밀번호<span> *</span></label></div>
                         <div class="join__ele--2"><input type="password" th:field="*{memPassword}" placeholder="비밀번호를 입력하세요."></div>
                         <div class="join__ele--3"></div>
-                    </div>
-                    <div class="vali__ele">
-                        <div class="vali__ele--1"></div>
-                        <div class="vali__ele--2">
-                            <p>8~15자 사이의 영문, 숫자, 특수문자 조합</p>
-                        </div>
-                        <div class="vali__ele--3"></div>
                     </div>
                     <div class="join__ele">
                         <div class="join__ele--1"><label for="">비밀번호 확인<span> *</span></label></div>
                         <div class="join__ele--2"><input type="password" placeholder="비밀번호를 재입력하세요."></div>
                         <div class="join__ele--3"></div>
                     </div>
-                    <div class="vali__ele">
-                        <div class="vali__ele--1"></div>
-                        <div class="vali__ele--2">
-                            <p>비밀번호 확인 필요</p>
-                        </div>
-                        <div class="vali__ele--3"></div>
-                    </div>
                     <div class="join__ele">
                         <div class="join__ele--1"><label for="">이름<span> *</span></label></div>
                         <div class="join__ele--2"><input type="text" th:field="*{memName}" placeholder="이름을 입력하세요."></div>
                         <div class="join__ele--3"></div>
-                    </div>
-                    <div class="vali__ele">
-                        <div class="vali__ele--1"></div>
-                        <div class="vali__ele--2"></div>
-                        <div class="vali__ele--3"></div>
                     </div>
                     <div class="join__ele">
                         <div class="join__ele--1"><label for="">닉네임<span> *</span></label></div>
                         <div class="join__ele--2"><input type="text" th:field="*{memNickname}" placeholder="닉네임을 입력하세요."></div>
                         <div class="join__ele--3"><button>중복확인</button></div>
                     </div>
-                    <div class="vali__ele">
-                        <div class="vali__ele--1"></div>
-                        <div class="vali__ele--2">
-                            <p>2~8자 사이의 문자</p>
-                            <p>중복 확인 필요</p>
-                        </div>
-                        <div class="vali__ele--3"></div>
-                    </div>
                     <div class="join__ele">
                         <div class="join__ele--1"><label for="">이메일<span> *</span></label></div>
-                        <div class="join__ele--2"><input type="email" th:field="*{memEmail}" placeholder="이메일을 입력하세요."></div>
+                        <div class="join__ele--2"><input type="text" th:field="*{memEmail}" placeholder="이메일을 입력하세요."></div>
                         <div class="join__ele--3"><button>인증번호 발송</button></div>
                     </div>
-                    <div class="vali__ele">
-                        <div class="vali__ele--1"></div>
-                        <div class="vali__ele--2"></div>
-                        <div class="vali__ele--3"></div>
-                    </div>
+                    <ul>
+                        <li>
+                            <span id="memEmailErr"></span>
+                        </li>
+                    </ul>
                     <div class="join__ele">
                         <div class="join__ele--1"><label for="">인증번호<span> *</span></label></div>
                         <div class="join__ele--2"><input type="text" placeholder="인증번호를 입력하세요."></div>
                         <div class="join__ele--3"><button>인증번호 확인</button></div>
-                    </div>
-                    <div class="vali__ele">
-                        <div class="vali__ele--1"></div>
-                        <div class="vali__ele--2">
-                            <p>인증번호 입력 필요</p>
-                        </div>
-                        <div class="vali__ele--3"></div>
                     </div>
                 </div>
                 <div class="wrap-terms content">
@@ -190,5 +165,31 @@
         <!-- //footer -->
 
     </div>
+
+    <script>
+        const $joinBtn = document.querySelector('.join-btn');
+
+//등록버튼 클릭시
+$joinBtn.addEventListener('click', e => {
+    // 데이터 검증(유효성 체크)
+    if (!validChk()) return;
+});
+
+
+function validChk() {
+
+    if (!memEmail.value.trim()) {
+        memEmailErr.textContent = '필수 필드입니다.'
+        if(!memEmailErr.classList.contains('fieldError')) {
+            memEmailErr.classList.add('fieldError');
+        }
+    } else {
+        memEmailErr.textContent = '';
+        memEmailErr.classList.remove('fieldError');
+    }
+
+    return true;
+}
+    </script>
 </body>
 </html>
