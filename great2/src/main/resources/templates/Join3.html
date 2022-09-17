@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="마감 할인 상품 소개">
+    <meta name="keywords" content="food, sale">
+    <meta name="author" content="KH 3팀">
+
+    <link rel="stylesheet" th:href="@{/css/common/common.css}">
+    <link rel="stylesheet" th:href="@{/css/join3.css}">
+    <link rel="icon" href="/member/img/icon.svg"> <!-- 탭 아이콘 변경 -->
+    <script src="https://kit.fontawesome.com/132ba309f6.js" crossorigin="anonymous"></script>
+    <title>회원가입</title>
+    <style>
+        .fieldError {
+            color: red;
+            font-weight: bold;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- header -->
+        <header class="header container">
+            <nav class="top-menu content">
+                <a href="/member/join_cust.html" class="top-menu__join">회원가입</a>
+                <a href="/member/login.html" class="top-menu__login">로그인</a>
+                <a href="" class="top-menu__cs">고객센터</a>
+            </nav>
+            <div class="logo content"><a href="/member/main_nonmem.html">GR<span>EAT</span></a></div>
+            <nav class="bottom-menu content">
+                <div class="category">
+                    <ul>
+                        <li class="region-category"> 지역 선택&nbsp;&nbsp;<i class="fa-solid fa-chevron-down"> </i>
+                            <ul>
+                                <li><a href="">남구</a></li>
+                                <li><a href="">중구</a></li>
+                                <li><a href="">북구</a></li>
+                                <li><a href="">동구</a></li>
+                                <li><a href="">울주군</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="search">
+                    <input type="text" class="search__search-box" placeholder="검색어를 입력하세요.">
+                    <a href="" class="search__search-icon"><i class="fa-solid fa-magnifying-glass"></i></a>
+                </div>
+            </nav>
+            <!-- top버튼 페이지 오른쪽 하단에 위치함 -->
+            <div class="topbtn">
+                <a href="#top"><i class="fa-solid fa-angles-up"></i></a>
+            </div>
+        </header>
+        <!-- //header -->
+
+        <!-- main -->
+        <main class="main container">
+            <div class="title content">
+                <h2>회원가입</h2>
+            </div>
+            <form class="join" action="" th:object="${join}">
+                <div class="member-type select content">
+                    <input type="radio" class="select__customer" id="select--1" name="memType" value="customer" checked>
+                    <label for="select--1">고객회원</label>
+                    <input type="radio" class="select__owner" id="select--2" name="memType" value="owner">
+                    <label for="select--2">점주회원</label>
+                </div>
+                <div class="required">
+                    <label><span>*</span> 필수입력사항</label>
+                </div>
+                <div class="wrap-join content">
+                    <div class="join__ele">
+                        <div class="join__ele--1"><label for="">아이디<span> *</span></label></div>
+                        <div class="join__ele--2"><input type="text" th:field="*{memId}" placeholder="아이디를 입력하세요."></div>
+                        <div class="join__ele--3"><button>중복확인</button></div>
+                    </div>
+                    <ul th:if="${#fields.hasErrors('memId')}" th:class="errmsg">
+                        <li>
+                            <span th:each="err : ${#fields.errors('memId')}" th:text="|${err}|"></span>
+                        </li>
+                    </ul>
+                    <div class="join__ele">
+                        <div class="join__ele--1"><label for="">비밀번호<span> *</span></label></div>
+                        <div class="join__ele--2"><input type="password" th:field="*{memPassword}" placeholder="비밀번호를 입력하세요."></div>
+                        <div class="join__ele--3"></div>
+                    </div>
+                    <div class="join__ele">
+                        <div class="join__ele--1"><label for="">비밀번호 확인<span> *</span></label></div>
+                        <div class="join__ele--2"><input type="password" placeholder="비밀번호를 재입력하세요."></div>
+                        <div class="join__ele--3"></div>
+                    </div>
+                    <div class="join__ele">
+                        <div class="join__ele--1"><label for="">이름<span> *</span></label></div>
+                        <div class="join__ele--2"><input type="text" th:field="*{memName}" placeholder="이름을 입력하세요."></div>
+                        <div class="join__ele--3"></div>
+                    </div>
+                    <div class="join__ele">
+                        <div class="join__ele--1"><label for="">닉네임<span> *</span></label></div>
+                        <div class="join__ele--2"><input type="text" th:field="*{memNickname}" placeholder="닉네임을 입력하세요."></div>
+                        <div class="join__ele--3"><button>중복확인</button></div>
+                    </div>
+                    <div class="join__ele">
+                        <div class="join__ele--1"><label for="">이메일<span> *</span></label></div>
+                        <div class="join__ele--2"><input type="text" th:field="*{memEmail}" placeholder="이메일을 입력하세요."></div>
+                        <div class="join__ele--3"><button>인증번호 발송</button></div>
+                    </div>
+                    <ul>
+                        <li>
+                            <span id="memEmailErr"></span>
+                        </li>
+                    </ul>
+                    <div class="join__ele">
+                        <div class="join__ele--1"><label for="">인증번호<span> *</span></label></div>
+                        <div class="join__ele--2"><input type="text" placeholder="인증번호를 입력하세요."></div>
+                        <div class="join__ele--3"><button>인증번호 확인</button></div>
+                    </div>
+                </div>
+                <div class="wrap-terms content">
+                    <div class="title-terms">
+                        <h3>이용약관</h3>
+                    </div>
+                    <div class="terms">
+                        <div class="terms__ele">
+                            <div class="terms__ele--1"><input type="checkbox" name="" id=""></div>
+                            <div class="terms__ele--2"><label for="">전체 동의</label></div>
+                            <div class="terms__ele--3"><a href="" class="view-terms">약관 보기</a></div>
+                        </div>
+                        <div class="terms__ele">
+                            <div class="terms__ele--1"><input type="checkbox" name="" id=""></div>
+                            <div class="terms__ele--2"><label for="">이용약관 동의</label></div>
+                            <div class="terms__ele--3"><a href="" class="view-terms">약관 보기</a></div>
+                        </div>
+                        <div class="terms__ele">
+                            <div class="terms__ele--1"><input type="checkbox" name="" id=""></div>
+                            <div class="terms__ele--2"><label for="">개인정보 수집 동의</label></div>
+                            <div class="terms__ele--3"><a href="" class="view-terms">약관 보기</a></div>
+                        </div>
+                        <div class="terms__ele">
+                            <div class="terms__ele--1"><input type="checkbox" name="" id=""></div>
+                            <div class="terms__ele--2"><label for="">개인정보 이용 동의</label></div>
+                            <div class="terms__ele--3"><a href="" class="view-terms">약관 보기</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wrap-join-btn content">
+                    <div class="wrap-join-btn content">
+                        <button type="button" class="btn join-btn">가입하기</button>
+                    </div>
+                </div>
+            </form>
+        </main>
+        <!-- //main -->
+
+        <!-- footer -->
+        <footer class="footer container">
+            <p class="content"></p>
+        </footer>
+        <!-- //footer -->
+
+    </div>
+
+    <script>
+        const $joinBtn = document.querySelector('.join-btn');
+
+        //입력데이터 가져오기
+        function getInputData() {
+
+            const memId = document.querySelector('.memId').value;
+            const memPassword = document.querySelector('.memPassword').value;
+            const memName = document.querySelector('.memName').value;
+            const memNickname = document.querySelector('.memNickname').value;
+            const memEmail = document.querySelector('.memEmail').value;
+
+            return {memId, memPassword, memName, memNickname, memEmail};
+        }
+
+        //등록버튼 클릭시
+        $joinBtn.addEventListener('click', e => {
+            //1) 데이터 검증(유효성 체크)
+            if (!validChk()) return;
+            //2) 입력데이터 가져오기
+            const member = getInputData();
+            //3) 상품등록 처리
+            join(member);
+        });
+
+        //회원가입 함수
+        function join(member) {
+            const url = 'http://localhost:8080/member/join';
+            fetch(url, {method: 'post', headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}, body: JSON.stringify(member)})
+                .then(res => res.json())
+                .then(mem => console.log('success: ', mem))
+                .catch(error => console.log('error: ', error));
+        }
+
+        //검증 함수
+        function validChk() {
+            if (!memEmail.value.trim()) {
+                memEmailErr.textContent = '필수 필드입니다.'
+                if(!memEmailErr.classList.contains('fieldError')) {
+                    memEmailErr.classList.add('fieldError');
+                }
+            } else {
+                memEmailErr.textContent = '';
+                memEmailErr.classList.remove('fieldError');
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
