@@ -10,14 +10,18 @@ import java.time.LocalDateTime;
 public class Join {
     private int memNumber;                      //varchar2(9)
     private String memType;                     //varchar2(15)
-    @NotBlank
+    @NotBlank(message = "필수 입력항목입니다.")
     private String memId;                       //varchar2(30)
+    @NotBlank(message = "필수 입력항목입니다.")
     private String memPassword;                 //varchar2(18)
+    @NotBlank(message = "필수 입력항목입니다.")
     private String memPasswordCheck;
+    @NotBlank(message = "필수 입력항목입니다.")
     private String memName;                     //varchar2(18)
+    @NotBlank(message = "필수 입력항목입니다.")
     private String memNickname;                 //varchar2(18)
     @Email(regexp = "[a-z0-9]+@[a-z]+\\.[a-z]{2,3}", message = "이메일 형식이 아닙니다.")
-    @NotBlank
+    @NotBlank(message = "필수 입력항목입니다.")
     private String memEmail;                    //varchar2(30)
     private LocalDateTime memRegtime;           //date
     private LocalDateTime memLockExpiration;    //date

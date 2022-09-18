@@ -37,10 +37,9 @@ public class MemberController {
         //검증로직
         //기본 검증
         if (bindingResult.hasErrors()) {
-//            log.info("errors={}", bindingResult);
+            log.info("errors={}", bindingResult);
             return "join";
         }
-
 
         //필드 검증(field error)
         if (join.getMemId().length() > 15) {
