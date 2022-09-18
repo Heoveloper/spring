@@ -8,10 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -37,17 +34,24 @@ public class MemberController {
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
     ) {
-        //검증
+        //검증로직
+        //기본 검증
         if (bindingResult.hasErrors()) {
-            log.info("errors={}", bindingResult);
+//            log.info("errors={}", bindingResult);
             return "join";
         }
 
 
-        //field error
-        if(join.getMemId().length() < 8 || join.getMemId().length() > 15) {
+        //필드 검증(field error)
+        if (join.getMemId().length() > 15) {
+            bindingResult.rejectValue("memId", null, "아이디 길이는 15자 이하까지 가능합니다.");
+            return "join";
+        }
 
-            bindingResult.rejectValue("memId", "memIdError", "아이디 길이가 맞지 않습니다.");
+        //오브젝트 검증(object error)
+        //비밀번호-비밀번호 확인 일치
+        if (join.getMemPassword() != join.getMemPasswordCheck()) {
+            bindingResult.reject(null, "비밀번호와 일치하지 않습니다.");
             return "join";
         }
 

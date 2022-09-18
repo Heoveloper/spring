@@ -16,7 +16,7 @@ public class Join {
     private String memPasswordCheck;
     private String memName;                     //varchar2(18)
     private String memNickname;                 //varchar2(18)
-    @Email(message = "이메일 형식이 아닙니다.")
+    @Email(regexp = "[a-z0-9]+@[a-z]+\\.[a-z]{2,3}", message = "이메일 형식이 아닙니다.")
     @NotBlank
     private String memEmail;                    //varchar2(30)
     private LocalDateTime memRegtime;           //date

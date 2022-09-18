@@ -76,7 +76,9 @@
                     </div>
                     <div class="vali__ele">
                         <div class="vali__ele--1"></div>
-                        <div class="vali__ele--2" th:each="err : ${#fields.errors('memId')}" th:text="|${err}|"></div>
+                        <div class="vali__ele--2">
+                            <ul><li th:each="err : ${#fields.errors('memId')}" th:text="|${err}|"></li></ul>
+                        </div>
                         <div class="vali__ele--3"></div>
                     </div>
                     <div class="join__ele">
@@ -96,7 +98,9 @@
                     </div>
                     <div class="vali__ele">
                         <div class="vali__ele--1"></div>
-                        <div class="vali__ele--2"></div>
+                        <div class="vali__ele--2" th:if="${#fields.hasGlobalErrors()}">
+                            <ul><li th:each="err:${#fields.globalErrors()}" th:text="${err}"></li></ul>
+                        </div>
                         <div class="vali__ele--3"></div>
                     </div>
                     <div class="join__ele">
@@ -126,7 +130,11 @@
                     </div>
                     <div class="vali__ele">
                         <div class="vali__ele--1"></div>
-                        <div class="vali__ele--2" th:each="err : ${#fields.errors('memEmail')}" th:text="|${err}|"></div>
+                        <div class="vali__ele--2">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('memEmail')}" th:text="|${err}|"></li>
+                            </ul>
+                        </div>
                         <div class="vali__ele--3"></div>
                     </div>
                     <div class="join__ele">
