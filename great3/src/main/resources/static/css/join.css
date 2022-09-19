@@ -1,8 +1,7 @@
 @charset "UTF-8";
 
 /* 커서: 포인터 */
-button {cursor: pointer;}
-button label {cursor: pointer;}
+label {cursor: pointer;}
 
 /* 메인 구조 */
 .main {display: flex; flex-direction: column; align-items: center; text-align: center;
@@ -12,7 +11,7 @@ button label {cursor: pointer;}
 button {border: none; border-radius: 5px; background-color: var(--main-color-gre);}
 
 /* 일부 버튼 글자 굵게 */
-.member-type label, .join-btn label {font-weight: bold;}
+.join-btn label {font-weight: bold;}
 
 
 /* 타이틀 */
@@ -20,8 +19,11 @@ h2 {letter-spacing: 3px; margin: 10px 0px; padding: 0px;}
 
 /* 회원유형 버튼 */
 .member-type {display: flex; justify-content: center; width: 100%;}
-.btn__customer {padding: 10px 70px; margin: 10px; background-color: var(--main-color-yel);}
-.btn__owner {padding: 10px 70px; margin: 10px;}
+.member-type input[type=radio] {display: none;}
+.member-type input[type=radio] + label {display: flex; justify-content: center; width: 200px; height: 40px;
+                                   		margin: 10px; padding: 10px 60px; border: none; border-radius: 5px;
+										font-size: 14px; letter-spacing: 3px; background-color: var(--main-color-gre);}
+.select input[type=radio]:checked + label {font-size: 15px; background-color: var(--main-color-yel);}
 
 /* 필수입력사항 */
 .required {margin: 20px 0px 0px 600px; font-size: 12px;}
