@@ -172,11 +172,11 @@
                     <div class="wrap-join-btn content">
                         <button type="submit" class="btn join-btn">가입하기</button>
                     </div>
-<!--                    <div th:if="${#fields.hasGlobalErrors()}">-->
-<!--                        <ul>-->
-<!--                            <li th:each="err:${#fields.globalErrors()}" th:text="${err}"></li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
+                    <div th:if="${#fields.hasGlobalErrors()}">
+                        <ul>
+                            <li th:each="err:${#fields.globalErrors()}" th:text="${err}"></li>
+                        </ul>
+                    </div>
                 </div>
             </form>
             <div class="wrap-terms content">

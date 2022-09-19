@@ -64,7 +64,7 @@
             <div class="title content">
                 <h2>회원가입</h2>
             </div>
-            <form class="join" action="" th:object="${join}">
+            <form class="join" method="post" action="" th:object="${join}">
                 <div class="member-type select content">
                     <input type="radio" class="select__customer" id="select--1" name="memType" value="customer" checked>
                     <label for="select--1">고객회원</label>
@@ -222,7 +222,7 @@
 
         //회원가입 함수
         function join(member) {
-            const url = 'http://localhost:8080/member/join';
+            const url = 'http://localhost:8080/member/join3';
             fetch(url, {method: 'POST', headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}, body: JSON.stringify(member)})
                 .then(res => res.json())
                 .then(mem => console.log('success: ', mem))
@@ -264,8 +264,8 @@
                 memEmailErr.textContent = '';
                 memEmailErr.classList.remove('fieldError');
             }
-            
-            
+
+
             return true;
         }
     </script>
