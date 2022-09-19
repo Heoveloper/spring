@@ -12,11 +12,7 @@
             font-weight: bold;
             font-size: 0.8em;
         }
-        #productList .wrap .head {
-            display: grid;
-            grid-template-columns: .2fr .2fr .2fr .5fr;
-            grid-auto-rows: 30px;
-        }
+        #productList .wrap .head,
         #productList .wrap .body {
             display: grid;
             grid-template-columns: .2fr .2fr .2fr .5fr;
@@ -25,6 +21,15 @@
         #productList .wrap .head {
             font-weight: bold;
             font-size: 1.2em;
+        }
+        #productList .wrap .head div,
+        #productList .wrap .body div {
+            border: 1px solid gray;
+        }
+
+        /* 버튼 */
+        .none {
+            display: none;
         }
     </style>
 </head>
@@ -58,9 +63,22 @@
                 <input type="text" id="price">
                 <span id="priceErr"></span>
             </div>
-            <div>
+            <!-- 등록상태 -->
+            <div class="btngrp add">
                 <button type="button" id="addBtn">등록</button>
             </div>
+            <!-- 조회상태 -->
+            <div class="btngrp read">
+                <button type="button" id="toAddBtn">신규</button>
+                <button type="button" id="modBtn">수정</button>
+                <button type="button" id="delBtn">삭제</button>
+            </div>
+            <!-- 수정상태 -->
+            <!--<div class="btngrp mod">-->
+            <!--    <button type="button" id="modBtn">수정</button>-->
+            <!--    <button type="button" id="cancelBtn">취소</button>-->
+            <!--</div>-->
+
         </form>
     </div>
 
@@ -85,14 +103,63 @@
         //fetch(resource, options)
 
         //샘플상품
-        const product = {
-                pname: '금은보화',
-                quantity: 7,
-                price: 50000
-        };
+        //const product = {
+        //        pname: '금은보화',
+        //        quantity: 7,
+        //        price: 50000
+        //};
+
+        //불변객체: 프로퍼티값 수정 불가
+        const MODE = Object.freeze ({
+            ADD: Symbol('add'),             //등록
+            READ: Symbol('read'),           //조회
+            //MODIFY: Symbol('modify')        //수정
+        });
+
+        //전역변수
+        const form = {
+            productId: document.getElementById('productId'),
+            pname: document.getElementById('pname'),
+            quantity: document.getElementById('quantity'),
+            price: document.getElementById('price'),
+            mode: null
+            //등록: add, 조회: findById, 수정: modify
+        }
+
+        //화면상태 체크
+        changeMode(MODE.ADD);
 
         //전체목록 가져오기
         findAll();
+
+        //화면상태 변경 함수
+        function changeMode(mode) {
+            //현재 mode와 비교하여 동일하면 수행하지 않음
+            if(form.mode == mode) return;
+
+            form.mode = mode;
+
+            switch (form.mode) {
+                case MODE.ADD: //등록
+                    //버튼
+                    document.querySelector('.btngrp.add').style.display = 'block';
+                    document.querySelector('.btngrp.read').style.display = 'none';
+                    //document.querySelector('.btngrp.mod').style.display = 'none';
+                    break;
+                case MODE.READ: //조회
+                    //버튼
+                    document.querySelector('.btngrp.add').style.display = 'none';
+                    document.querySelector('.btngrp.read').style.display = 'block';
+                    //document.querySelector('.btngrp.mod').style.display = 'none';
+                    break;
+                //case MODE.MODIFY: //수정
+                    //버튼
+                    //document.querySelector('.btngrp.add').style.display = 'none';
+                    //document.querySelector('.btngrp.read').style.display = 'none';
+                    //document.querySelector('.btngrp.mod').style.display = 'block';
+                    //break;
+            }
+        }
 
         //입력데이터 가져오기
         function getInputData() {
@@ -119,15 +186,45 @@
             clearForm();
         });
 
+        //삭제버튼 클릭시
+        delBtn.addEventListener('click', e => {
+            if(!confirm('삭제하시겠습니까?')) return;
+            const id = productId.value;
+            deleteById(id);
+        });
+
         //조회버튼 클릭시
         findBtn.addEventListener('click', e => {
+            if (!productId.value.trim()) {
+                productIdErr.textContent = '조회할 상품아이디를 입력하세요.'
+                if(!productIdErr.classList.contains('fieldError')) {
+                    productIdErr.classList.add('fieldError');
+                }
+                return;
+            } else {
+                productIdErr.textContent = '';
+                productIdErr.classList.remove('fieldError');
+            }
             const id = productId.value;
             findById(id);
         });
 
-        //목록 클릭시
+        //수정버튼 클릭시
+        modBtn.addEventListener('click', e => {
+            //1) 데이터 검증(유효성 체크)
+            if (!validChk()) return;
+            //2) 수정처리
+            update(productId.value, getInputData());
+        });
+
+        //목록버튼 클릭시
         listBtn.addEventListener('click', e => {
             findAll();
+        });
+
+        //신규버튼 클릭시
+        toAddBtn.addEventListener('click', e => {
+            changeMode(MODE.ADD);
         });
 
         //상품등록 함수
@@ -146,7 +243,11 @@
                 //"price": "50000"
                 //}`
             }).then(response => response.json())
-              .then(data => console.log('success: ', data))
+              .then(data => {
+                console.log('success: ', data);
+                findAll();
+                clearForm();
+              })
               .catch(error => console.log('error: ', error));
         }
 
@@ -170,6 +271,8 @@
                     document.getElementById('price').value = price;
 
                     productIdErr.textContent = '';
+                    //조회 상태로 변경
+                    changeMode(MODE.READ);
 
                 } else {
                     const errMsg = `${res.header.rtcd}-${res.header.rtmsg}`;
@@ -195,7 +298,11 @@
                 },
                 body: JSON.stringify(product),     //http body
             }).then(response => response.json())
-              .then(data => console.log('success: ', data))
+              .then(data => {
+                  console.log('success: ', data),
+                  findAll();
+                  //clearForm();
+              })
               .catch(error => console.log('error: ', error));
         }
 
@@ -208,7 +315,11 @@
                     'Accept': 'application/json'
                 }
             }).then(response => response.json())
-              .then(data => console.log('success: ', data))
+              .then(data => {
+                console.log('success: ', data);
+                findAll();
+                clearForm();
+              })
               .catch(error => console.log('error: ', error));
         }
 
@@ -227,7 +338,7 @@
                     const result =
                     response.data.map(product => {
                         return `<div>${product.productId}</div>
-                                <div>${product.pname}</div>
+                                <div><a href='#' onclick='findById(${product.productId})'>${product.pname}</a></div>
                                 <div>${product.quantity}</div>
                                 <div>${product.price}</div>`
                     });
@@ -339,6 +450,7 @@
 
         //필드 초기화
         function clearForm() {
+            productId.value = '';
             pname.value = '';
             quantity.value = '';
             price.value = '';
