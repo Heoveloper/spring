@@ -4,6 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <!--<th:block th:fragment="head">-->
 <head layout:fragment="head">
+    <th:block th:fragment="commonHead">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,12 +13,55 @@
     <meta name="author" content="KH 3팀">
     <link rel="stylesheet" th:href="@{/css/common/common.css}">
     <link rel="icon" th:href="@{/css/common/icon.svg}">
+    </th:block>
 </head>
 <!--</th:block>-->
 
 <body>
-    <th:block layout:fragment="content">
-        본문
-    </th:block>
+    <div layout:fragment="wrapper">
+        <!-- header -->
+        <header th:fragment="fragHeader" class="header container">
+            <nav class="top-menu content">
+                <a href="/member/join_cust.html" class="top-menu__join">회원가입</a>
+                <a href="/member/login.html" class="top-menu__login">로그인</a>
+                <a href="" class="top-menu__cs">고객센터</a>
+            </nav>
+            <div class="logo content"><a href="/member/main_nonmem.html">GR<span>EAT</span></a></div>
+            <nav class="bottom-menu content">
+                <div class="category">
+                    <ul>
+                        <li class="region-category"> 지역 선택&nbsp;&nbsp;<i class="fa-solid fa-chevron-down"> </i>
+                            <ul>
+                                <li><a href="">남구</a></li>
+                                <li><a href="">중구</a></li>
+                                <li><a href="">북구</a></li>
+                                <li><a href="">동구</a></li>
+                                <li><a href="">울주군</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="search">
+                    <input type="text" class="search__search-box" placeholder="검색어를 입력하세요.">
+                    <a href="" class="search__search-icon"><i class="fa-solid fa-magnifying-glass"></i></a>
+                </div>
+            </nav>
+            <!-- top버튼 페이지 오른쪽 하단에 위치함 -->
+            <div class="topbtn">
+                <a href="#top"><i class="fa-solid fa-angles-up"></i></a>
+            </div>
+        </header>
+        <!-- //header -->
+
+        <main layout:fragment="main">
+            해당 페이지 컨텐츠 공간
+        </main>
+
+        <!-- footer -->
+        <footer th:fragment="fragFooter" class="footer container">
+            <p class="content"></p>
+        </footer>
+        <!-- //footer -->
+    </div>
 </body>
 </html>
