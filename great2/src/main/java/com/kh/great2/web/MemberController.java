@@ -24,7 +24,7 @@ public class MemberController {
     @GetMapping("/join")
     public String join(Model model) {
         model.addAttribute("join", new Join());
-        return "join3";    //회원가입 화면
+        return "join";    //회원가입 화면
     }
 
     //회원가입 처리
@@ -38,20 +38,20 @@ public class MemberController {
         //기본 검증
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
-            return "join3";
+            return "join";
         }
 
         //필드 검증(field error)
         if (join.getMemId().length() > 15) {
             bindingResult.rejectValue("memId", null, "아이디 길이는 15자 이하까지 가능합니다.");
-            return "join3";
+            return "join";
         }
 
         //오브젝트 검증(object error)
         //비밀번호-비밀번호 확인 일치
         if (join.getMemPassword() == join.getMemPasswordCheck()) {
             bindingResult.reject(null, "비밀번호 일치합니다");
-            return "join3";
+            return "join";
         }
 
 
