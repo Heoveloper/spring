@@ -13,11 +13,11 @@ import java.util.UUID;
 
 @Component
 public class FileUtils {
-    @Value("${attach.root_dir")
+    @Value("${attach.root_dir}")
     private String attachRoot;  //첨부파일 root 경로
 
     //MultipartFile -> UploadFile
-    public UploadFile multipartFileToUploadFile(MultipartFile file, AttachCode code, String rid) {
+    public UploadFile multipartFileToUploadFile(MultipartFile file, AttachCode code, Long rid) {
         UploadFile uploadFile = new UploadFile();
 
         uploadFile.setCode(code.name()); //상품관리
@@ -36,7 +36,7 @@ public class FileUtils {
     }
 
     //List<MultipartFile> -> List<UploadFile>
-    public List<UploadFile> multipartFileToUploadFiles(List<MultipartFile> files, AttachCode code, String rid) {
+    public List<UploadFile> multipartFileToUploadFiles(List<MultipartFile> files, AttachCode code, Long rid) {
         List<UploadFile> uploadFiles = new ArrayList<>();
         for (MultipartFile file : files) {
             UploadFile uploadFile = multipartFileToUploadFile(file, code, rid);
@@ -44,22 +44,6 @@ public class FileUtils {
         }
 
         return uploadFiles;
-    }
-
-    //스토리지에 파일 저장
-    private void storageFile(MultipartFile file, AttachCode code, String storeFileName) {
-        try {
-            File f = new File(getPath(code, storeFileName));
-            f.mkdir();  //경로가 존재하지 않으면 생성
-            file.transferTo(f);
-        } catch (IOException e) {
-            throw new RuntimeException("첨부파일 스토리지 저장시 오류 발생!");
-        }
-    }
-
-    //첨부파일 경로
-    private String getPath(AttachCode code, String storeFileName) {
-        return attachRoot + code.name() + "/" + storeFileName;
     }
 
     //랜덤파일 생성
@@ -77,5 +61,21 @@ public class FileUtils {
                 .toString();
 
         return storedFileName;
+    }
+
+    //스토리지에 파일 저장
+    private void storageFile(MultipartFile file, AttachCode code, String storeFileName) {
+        try {
+            File f = new File(getPath(code, storeFileName));
+            f.mkdir();  //경로가 존재하지 않으면 생성
+            file.transferTo(f);
+        } catch (IOException e) {
+            throw new RuntimeException("첨부파일 스토리지 저장시 오류 발생!");
+        }
+    }
+
+    //첨부파일 경로
+    private String getPath(AttachCode code, String storeFileName) {
+        return this.attachRoot + code.name() + "/" + storeFileName;
     }
 }

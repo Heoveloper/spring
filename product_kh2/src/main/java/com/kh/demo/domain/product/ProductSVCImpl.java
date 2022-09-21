@@ -10,13 +10,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 //@Transactional
 public class ProductSVCImpl implements ProductSVC{
+
   private final ProductDAO productDAO;
   private final UploadFileDAO uploadFileDAO;
   private final FileUtils fileUtils;
@@ -33,7 +33,7 @@ public class ProductSVCImpl implements ProductSVC{
     Long id = save(product);
 
     //2) 첨부파일(설명) 메타정보 등록 (uploadFile 테이블), 첨부파일 저장소에 저장 (xxx-xxx-xxx.ext)
-    uploadFileDAO.addFile(fileUtils.multipartFileToUploadFile(file, AttachCode.P0101, String.valueOf(id)));
+    uploadFileDAO.addFile(fileUtils.multipartFileToUploadFile(file, AttachCode.P0101, id));
 
     return id;
   }
@@ -44,7 +44,7 @@ public class ProductSVCImpl implements ProductSVC{
     Long id = save(product);
 
     //2) 첨부파일(이미지) 메타정보 등록 (uploadFile 테이블), 첨부파일 저장소에 저장 (xxx-xxx-xxx.ext)
-    uploadFileDAO.addFile(fileUtils.multipartFileToUploadFiles(files, AttachCode.P0102, String.valueOf(id)));
+    uploadFileDAO.addFile(fileUtils.multipartFileToUploadFiles(files, AttachCode.P0102, id));
 
     return id;
   }
@@ -55,10 +55,10 @@ public class ProductSVCImpl implements ProductSVC{
     Long id = save(product);
 
     //2) 첨부파일(설명) 메타정보 등록 (uploadFile 테이블), 첨부파일 저장소에 저장 (xxx-xxx-xxx.ext)
-    uploadFileDAO.addFile(fileUtils.multipartFileToUploadFile(file, AttachCode.P0101, String.valueOf(id)));
+    uploadFileDAO.addFile(fileUtils.multipartFileToUploadFile(file, AttachCode.P0101, id));
 
     //2) 첨부파일(이미지) 메타정보 등록 (uploadFile 테이블), 첨부파일 저장소에 저장 (xxx-xxx-xxx.ext)
-    uploadFileDAO.addFile(fileUtils.multipartFileToUploadFiles(files, AttachCode.P0102, String.valueOf(id)));
+    uploadFileDAO.addFile(fileUtils.multipartFileToUploadFiles(files, AttachCode.P0102, id));
 
     return id;
   }
@@ -87,20 +87,4 @@ public class ProductSVCImpl implements ProductSVC{
     return productDAO.deleteByProductId(productId);
   }
 
-  //랜덤파일 생성
-  private String storeFileName(String originalFileName) {
-    //확장자 추출
-    int dotPosition = originalFileName.indexOf(".");
-    String ext = originalFileName.substring(dotPosition + 1);
-
-    //랜덤파일명
-    String storedFName = UUID.randomUUID().toString();
-    StringBuffer fileName = new StringBuffer();
-    String storedFileName = fileName.append(storedFName)
-            .append(".")
-            .append(ext)
-            .toString();
-
-    return storedFileName;
-  }
 }
