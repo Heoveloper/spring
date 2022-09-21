@@ -22,7 +22,7 @@ public class SaveForm {
   @Max(9999999999L)
   private Long price;       //  PRICE	NUMBER(10,0)
 
-  private MultipartFile file; //상품설명/이미지 첨부파일(단건)
-  private List<MultipartFile> files;  //상품설명/이미지 첨부파일(여러건)
+  private MultipartFile file; //상품설명 첨부파일(단건)
+  private List<MultipartFile> files;  //상품이미지 첨부파일(여러건)
 }
 

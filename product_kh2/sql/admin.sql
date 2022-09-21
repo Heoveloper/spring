@@ -1,12 +1,12 @@
 drop user c##product;
---ê³„ì •ìƒì„±
+--°èÁ¤»ý¼º
 CREATE USER c##product IDENTIFIED BY product1234
     DEFAULT TABLESPACE users
     TEMPORARY TABLESPACE temp
     PROFILE DEFAULT;
---ê¶Œí•œë¶€ì—¬
+--±ÇÇÑºÎ¿©
 GRANT CONNECT, RESOURCE TO c##product;
 GRANT CREATE VIEW, CREATE SYNONYM TO c##product;
 GRANT UNLIMITED TABLESPACE TO c##product;
---ë½ í’€ê¸°
+--¶ô Ç®±â
 ALTER USER c##product ACCOUNT UNLOCK;

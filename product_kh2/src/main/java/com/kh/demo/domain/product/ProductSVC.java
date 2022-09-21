@@ -1,17 +1,21 @@
 package com.kh.demo.domain.product;
 
-import com.kh.demo.domain.product.Product;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ProductSVC {
+
   /**
    * 상품등록
    * @param product
    * @return
    */
   Long save(Product product);
+  Long save(Product product, MultipartFile file);
+  Long save(Product product, List<MultipartFile> files);
+  Long save(Product product, MultipartFile file, List<MultipartFile> files);
 
   /**
    * 상품목록
@@ -39,4 +43,5 @@ public interface ProductSVC {
    * @return
    */
   int deleteByProductId(Long productId);
+
 }

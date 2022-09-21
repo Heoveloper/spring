@@ -1,25 +1,25 @@
 ---------
---ì²¨ë¶€íŒŒì¼
+--Ã·ºÎÆÄÀÏ
 ---------
 create table uploadfile(
-    uploadfile_id   number(10),     --íŒŒì¼ì•„ì´ë””
-    code            varchar2(11),   --ë¶„ë¥˜ì½”ë“œ
-    rid             varchar2(10),     --ì°¸ì¡°ë²ˆí˜¸(ê²Œì‹œê¸€ë²ˆí˜¸ë“±)
-    store_filename  varchar2(100),   --ì„œë²„ë³´ê´€íŒŒì¼ëª…
-    upload_filename varchar2(100),   --ì—…ë¡œë“œíŒŒì¼ëª…(ìœ ì €ê°€ ì—…ë¡œë“œí•œíŒŒì¼ëª…)
-    fsize           varchar2(45),   --ì—…ë¡œë“œíŒŒì¼í¬ê¸°(ë‹¨ìœ„byte)
-    ftype           varchar2(100),   --íŒŒì¼ìœ í˜•(mimetype)
-    cdate           timestamp default systimestamp, --ë“±ë¡ì¼ì‹œ
-    udate           timestamp default systimestamp  --ìˆ˜ì •ì¼ì‹œ
+    uploadfile_id   number(10),     --ÆÄÀÏ¾ÆÀÌµğ
+    code            varchar2(11),   --ºĞ·ùÄÚµå
+    rid             varchar2(10),     --ÂüÁ¶¹øÈ£(°Ô½Ã±Û¹øÈ£µî)
+    store_filename  varchar2(100),   --¼­¹öº¸°üÆÄÀÏ¸í
+    upload_filename varchar2(100),   --¾÷·ÎµåÆÄÀÏ¸í(À¯Àú°¡ ¾÷·ÎµåÇÑÆÄÀÏ¸í)
+    fsize           varchar2(45),   --¾÷·ÎµåÆÄÀÏÅ©±â(´ÜÀ§byte)
+    ftype           varchar2(100),   --ÆÄÀÏÀ¯Çü(mimetype)
+    cdate           timestamp default systimestamp, --µî·ÏÀÏ½Ã
+    udate           timestamp default systimestamp  --¼öÁ¤ÀÏ½Ã
 );
---ê¸°ë³¸í‚¤
+--±âº»Å°
 alter table uploadfile add constraint uploadfile_uploadfile_id_pk primary key(uploadfile_id);
 
---ì™¸ë˜í‚¤
+--¿Ü·¡Å°
 alter table uploadfile add constraint uploadfile_uploadfile_id_fk
     foreign key(code) references code(code_id);
 
---ì œì•½ì¡°ê±´
+--Á¦¾àÁ¶°Ç
 alter table uploadfile modify code constraint uploadfile_code_nn not null;
 alter table uploadfile modify rid constraint uploadfile_rid_nn not null;
 alter table uploadfile modify store_filename constraint uploadfile_store_filename_nn not null;
@@ -27,5 +27,5 @@ alter table uploadfile modify upload_filename constraint uploadfile_upload_filen
 alter table uploadfile modify fsize constraint uploadfile_fsize_nn not null;
 alter table uploadfile modify ftype constraint uploadfile_ftype_nn not null;
 
---ì‹œí€€ìŠ¤
+--½ÃÄö½º
 create sequence uploadfile_uploadfile_id_seq;

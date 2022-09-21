@@ -5,39 +5,39 @@ create table product(
     quantity    number(10),
     price       number(10)
 );
---ê¸°ë³¸í‚¤
+--±âº»Å°
 alter table product add constraint product_product_id_pk primary key(product_id);
 
---ì‹œí€€ìŠ¤ìƒì„±
+--½ÃÄö½º»ı¼º
 drop sequence product_product_id_seq;
 create sequence product_product_id_seq;
 
 
---ìƒì„±--
+--»ı¼º--
 insert into product(product_id,pname,quantity,price)
-     values(product_product_id_seq.nextval, 'ì»´í“¨í„°', 5, 1000000);
+     values(product_product_id_seq.nextval, 'ÄÄÇ»ÅÍ', 5, 1000000);
 
 insert into product(product_id,pname,quantity,price)
-     values(product_product_id_seq.nextval, 'ëª¨ë‹ˆí„°', 5, 500000);
+     values(product_product_id_seq.nextval, '¸ğ´ÏÅÍ', 5, 500000);
 
 insert into product(product_id,pname,quantity,price)
-     values(product_product_id_seq.nextval, 'í”„ë¦°í„°', 1, 300000);
+     values(product_product_id_seq.nextval, 'ÇÁ¸°ÅÍ', 1, 300000);
 
---ì¡°íšŒ--
+--Á¶È¸--
 select product_id, pname, quantity, price
   from product
  where product_id = 2;
 
---ìˆ˜ì •--
+--¼öÁ¤--
 update product
-   set pname = 'ì»´í“¨í„°2',
+   set pname = 'ÄÄÇ»ÅÍ2',
        quantity = 10,
        price = 1200000;
 
---ì‚­ì œ
+--»èÁ¦
 delete from product where product_id = 1;
 
---ì „ì²´ì¡°íšŒ-
+--ÀüÃ¼Á¶È¸-
 select product_id,pname,quantity,price from product;
 
 commit;
