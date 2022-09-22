@@ -37,8 +37,8 @@ public class AttachFileController {
     @ResponseBody
     @GetMapping("/img/{attachCode}/{storeFileName}")
     public Resource img(
-            @PathVariable String storeFileName,
-            @PathVariable String attachCode
+            @PathVariable String attachCode,
+            @PathVariable String storeFileName
     ) throws MalformedURLException {
 
         // http://서버:포트/경로...
@@ -53,7 +53,7 @@ public class AttachFileController {
     public ResponseEntity<Resource> file (
             @PathVariable String attachCode,
             @PathVariable Long fid
-    ) {
+    ) throws MalformedURLException {
         ResponseEntity<Resource> res = null;
 
         Optional<UploadFile> uploadFile = uploadFileDAO.findFileByUploadFileId(fid);
@@ -65,6 +65,7 @@ public class AttachFileController {
         String encode = UriUtils.encode(storeFileName, StandardCharsets.UTF_8);
 
         String contentDisposition = "attachment; filename = \""+encode+"\"";
+
         res = ResponseEntity.ok()
                             .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
                             .body(resource);
