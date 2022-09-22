@@ -61,8 +61,11 @@ public class AttachFileController {
 
         UploadFile attachFile = uploadFile.get();
         String storeFileName = attachFile.getStoreFilename();
-        Resource resource = new UrlResource("file:///" + attachRoot + "/" + attachCode + "/" + storeFileName);
-        String encode = UriUtils.encode(storeFileName, StandardCharsets.UTF_8);
+        String uploadFileName = attachFile.getUploadFilename();
+
+
+        Resource resource = new UrlResource("file:" + attachRoot + "/" + attachCode + "/" + storeFileName);
+        String encode = UriUtils.encode(uploadFileName, StandardCharsets.UTF_8);
 
         String contentDisposition = "attachment; filename = \""+encode+"\"";
 

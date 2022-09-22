@@ -22,10 +22,10 @@ public class FileUtils {
 
         uploadFile.setCode(code.name()); //상품관리
         uploadFile.setRid(rid);
-        uploadFile.setStoreFilename(file.getOriginalFilename());
+        uploadFile.setUploadFilename(file.getOriginalFilename());
 
         String storeFileName = storeFileName(file.getOriginalFilename());
-        uploadFile.setUploadFilename(storeFileName);
+        uploadFile.setStoreFilename(storeFileName);
         uploadFile.setFsize(String.valueOf(file.getSize()));
         uploadFile.setFtype(file.getContentType());
 
@@ -67,7 +67,7 @@ public class FileUtils {
     private void storageFile(MultipartFile file, AttachCode code, String storeFileName) {
         try {
             File f = new File(getPath(code, storeFileName));
-            f.mkdir();  //경로가 존재하지 않으면 생성
+            f.mkdirs();  //경로가 존재하지 않으면 생성
             file.transferTo(f);
         } catch (IOException e) {
             throw new RuntimeException("첨부파일 스토리지 저장시 오류 발생!");
