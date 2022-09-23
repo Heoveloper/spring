@@ -17,7 +17,7 @@ public interface MemberSVC {
      * @param memNumber 회원아이디
      * @return 회원정보
      */
-    Member findById(int memNumber);
+    Member findById(Long memNumber);
 
     /**
      * 수정
@@ -25,14 +25,14 @@ public interface MemberSVC {
      * @param member  수정할 정보
      * @return 수정건수
      */
-    int update(int memNumber, Member member);
+    Long update(Long memNumber, Member member);
 
     /**
      * 탈퇴
      * @param memNumber 회원아이디
      * @return 삭제건수
      */
-    int delete(int memNumber);
+    Long delete(Long memNumber);
 
     /**
      * 목록

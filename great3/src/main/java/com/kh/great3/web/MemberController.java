@@ -70,7 +70,7 @@ public class MemberController {
         member.setMemStoreSns(join.getMemStoreSns());
         Member joinedMember = memberSVC.join(member);
 
-        int id = joinedMember.getMemNumber();
+        Long id = joinedMember.getMemNumber();
         redirectAttributes.addAttribute("id", id);
         return "redirect:/member/{id}";  //가입완료화면
     }

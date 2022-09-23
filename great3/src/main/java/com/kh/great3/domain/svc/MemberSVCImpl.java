@@ -24,7 +24,7 @@ public class MemberSVCImpl implements MemberSVC {
     public Member join(Member member) {
 
         //회원 아이디 생성
-        int generateMemberNumber = memberDAO.generateMemberNumber();
+        Long generateMemberNumber = memberDAO.generateMemberNumber();
         member.setMemNumber(generateMemberNumber);
         memberDAO.join(member);
         return memberDAO.findById(generateMemberNumber);
@@ -37,7 +37,7 @@ public class MemberSVCImpl implements MemberSVC {
      * @return 회원정보
      */
     @Override
-    public Member findById(int memNumber) {
+    public Member findById(Long memNumber) {
         return memberDAO.findById(memNumber);
     }
 
@@ -49,8 +49,8 @@ public class MemberSVCImpl implements MemberSVC {
      * @return 수정건수
      */
     @Override
-    public int update(int memNumber, Member member) {
-        int cnt = memberDAO.update(memNumber, member);
+    public Long update(Long memNumber, Member member) {
+        Long cnt = memberDAO.update(memNumber, member);
         log.info("수정건수={}", cnt);
         return cnt;
     }
@@ -62,8 +62,8 @@ public class MemberSVCImpl implements MemberSVC {
      * @return 삭제건수
      */
     @Override
-    public int delete(int memNumber) {
-        int cnt = memberDAO.delete(memNumber);
+    public Long delete(Long memNumber) {
+        Long cnt = memberDAO.delete(memNumber);
         log.info("삭제건수={}", cnt);
         return cnt;
     }

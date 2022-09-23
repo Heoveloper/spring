@@ -20,9 +20,9 @@ public class MemberDAOImpl implements MemberDAO {
      * 신규 회원아이디(고객회원) 생성
      * @return 회원아이디
      */
-    public int generateMemberNumber(){
+    public Long generateMemberNumber(){
         String sql = "select mem_num.nextval from dual ";
-        int memNumber = jt.queryForObject(sql, int.class);
+        Long memNumber = jt.queryForObject(sql, Long.class);
         return memNumber;
     }
 
@@ -33,7 +33,7 @@ public class MemberDAOImpl implements MemberDAO {
      * @return 회원아이디
      */
     @Override
-    public int join(Member member) {
+    public Long join(Member member) {
         int result = 0;
         StringBuffer sql = new StringBuffer();
         sql.append("insert into member (mem_number, mem_type, mem_id, mem_password, mem_name, mem_nickname, mem_email, ");
@@ -44,7 +44,7 @@ public class MemberDAOImpl implements MemberDAO {
         result = jt.update(sql.toString(), member.getMemNumber(), member.getMemType(), member.getMemId(), member.getMemPassword(), member.getMemName(), member.getMemNickname(), member.getMemEmail(),
                 member.getMemBusinessnumber(), member.getMemStoreName(), member.getMemStorePhonenumber(), member.getMemStoreLocation(), member.getMemStoreIntroduce(), member.getMemStoreSns());
 
-        return result;
+        return Long.valueOf(result);
     }
 
     /**
@@ -54,7 +54,7 @@ public class MemberDAOImpl implements MemberDAO {
      * @return 회원정보
      */
     @Override
-    public Member findById(int memNumber) {
+    public Member findById(Long memNumber) {
         StringBuffer sql = new StringBuffer();
 
         sql.append("select mem_number, mem_type, mem_id, mem_password, mem_name, mem_nickname, mem_email, ");
@@ -81,7 +81,7 @@ public class MemberDAOImpl implements MemberDAO {
      * @param member   수정할 정보
      */
     @Override
-    public int update(int memNumber, Member member) {
+    public Long update(Long memNumber, Member member) {
         int result = 0;
         StringBuffer sql = new StringBuffer();
         sql.append("update member ");
@@ -91,7 +91,7 @@ public class MemberDAOImpl implements MemberDAO {
         sql.append(" where member_id = ? ");
 
         result = jt.update(sql.toString(), member.getMemNickname(),  member.getMemPassword(), memNumber);
-        return result;
+        return Long.valueOf(result);
     }
 
     /**
@@ -100,12 +100,12 @@ public class MemberDAOImpl implements MemberDAO {
      * @param memNumber 회원아이디
      */
     @Override
-    public int delete(int memNumber) {
+    public Long delete(Long memNumber) {
         int result = 0;
         String sql = "delete from member where member_id = ? ";
 
         result = jt.update(sql, memNumber);
-        return result;
+        return Long.valueOf(result);
     }
 
     /**
@@ -132,7 +132,7 @@ public class MemberDAOImpl implements MemberDAO {
     @Override
     public Boolean dupChkOfMemberEmail(String email) {
         String sql = "select count(email) from member where email = ? ";
-        Integer rowCount = jt.queryForObject(sql, Integer.class, email);
+        Long rowCount = jt.queryForObject(sql, Long.class, email);
         return rowCount == 1 ? true : false;
     }
 }

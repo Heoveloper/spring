@@ -9,7 +9,7 @@ public interface MemberDAO {
      * 신규 회원번호 생성
      * @return 회원아이디
      */
-    int generateMemberNumber();
+    Long generateMemberNumber();
 
     /**
      * 회원가입
@@ -17,14 +17,14 @@ public interface MemberDAO {
      * @param member 가입정보
      * @return 회원아이디
      */
-    int join(Member member);
+    Long join(Member member);
 
     /**
      * 조회 by 회원아이디
      * @param memNumber 회원아이디
      * @return 회원정보
      */
-    Member findById(int memNumber);
+    Member findById(Long memNumber);
 
     /**
      * 수정
@@ -32,14 +32,14 @@ public interface MemberDAO {
      * @param member  수정할 정보
      * @return 수정건수
      */
-    int update(int memNumber, Member member);
+    Long update(Long memNumber, Member member);
 
     /**
      * 탈퇴
      * @param memNumber 아이디
      * @return 삭제건수
      */
-    int delete(int memNumber);
+    Long delete(Long memNumber);
 
     /**
      * 목록
