@@ -2,7 +2,7 @@ package com.kh.demo.domain.product;
 
 import com.kh.demo.domain.common.file.AttachCode;
 import com.kh.demo.domain.common.file.FileUtils;
-import com.kh.demo.domain.common.file.UploadFileDAO;
+import com.kh.demo.domain.common.file.UploadFileSVC;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.Optional;
 public class ProductSVCImpl implements ProductSVC{
 
   private final ProductDAO productDAO;
-  private final UploadFileDAO uploadFileDAO;
+  private final UploadFileSVC uploadFileSVC;
   private final FileUtils fileUtils;
 
   //등록
@@ -33,7 +33,7 @@ public class ProductSVCImpl implements ProductSVC{
     Long id = save(product);
 
     //2) 첨부파일(설명) 메타정보 등록 (uploadFile 테이블), 첨부파일 저장소에 저장 (xxx-xxx-xxx.ext)
-    uploadFileDAO.addFile(fileUtils.multipartFileToUploadFile(file, AttachCode.P0101, id));
+    uploadFileSVC.addFile(file, AttachCode.P0101, id);
 
     return id;
   }
@@ -44,7 +44,7 @@ public class ProductSVCImpl implements ProductSVC{
     Long id = save(product);
 
     //2) 첨부파일(이미지) 메타정보 등록 (uploadFile 테이블), 첨부파일 저장소에 저장 (xxx-xxx-xxx.ext)
-    uploadFileDAO.addFile(fileUtils.multipartFileToUploadFiles(files, AttachCode.P0102, id));
+    uploadFileSVC.addFile(files, AttachCode.P0102, id);
 
     return id;
   }
@@ -55,10 +55,10 @@ public class ProductSVCImpl implements ProductSVC{
     Long id = save(product);
 
     //2) 첨부파일(설명) 메타정보 등록 (uploadFile 테이블), 첨부파일 저장소에 저장 (xxx-xxx-xxx.ext)
-    uploadFileDAO.addFile(fileUtils.multipartFileToUploadFile(file, AttachCode.P0101, id));
+    uploadFileSVC.addFile(file, AttachCode.P0101, id);
 
     //2) 첨부파일(이미지) 메타정보 등록 (uploadFile 테이블), 첨부파일 저장소에 저장 (xxx-xxx-xxx.ext)
-    uploadFileDAO.addFile(fileUtils.multipartFileToUploadFiles(files, AttachCode.P0102, id));
+    uploadFileSVC.addFile(files, AttachCode.P0102, id);
 
     return id;
   }

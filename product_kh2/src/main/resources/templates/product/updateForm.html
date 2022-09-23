@@ -65,21 +65,25 @@
     </div>
 
     <!--파일 참조-->
-    <div th:if="${form.attachFile}">
-      <a href="http://localhost:9080/attach/file/P0101/22"
-        th:href="@{/attach/file/{attachCode}/{fid}(attachCode=${form.attachFile.code}, fid=${form.attachFile.uploadfileId})}"
-        th:text="${form.attachFile.uploadFilename}">
-        >상품설명</a>
-      <!--       th:text="|${form.attachFile.uploadFilename}(${form.attachFile.fsize})(${form.attachFile.ftype})|"-->
-      <a href="" th:href="@{}" class="delBtn">삭제</a>
+    <div id="attachFile" th:if="${form.attachFile}">
+      <div th:class="item">
+        <a href="http://localhost:9080/attach/file/P0101/21"
+           th:href="@{/api/attach/file/{attachCode}/{fid}(attachCode=${form.attachFile.code}, fid=${form.attachFile.uploadfileId})}"
+           th:text="${form.attachFile.uploadFilename}">
+          >상품설명</a>
+        <!--       th:text="|${form.attachFile.uploadFilename}(${form.attachFile.fsize})(${form.attachFile.ftype})|"-->
+        <a href="" th:data-ftype="attachFile" th:onclick="|delAttachFile(event, ${form.attachFile.uploadfileId})|" class="delBtn">삭제</a>
+      </div>
     </div>
-    <div th:if="${form.imageFiles}">
+    <div id="imageFiles" th:if="${form.imageFiles}">
       <th:block th:each="imageFile: ${form.imageFiles}">
-        <img width="200px" src="http://localhost:9080/attach/img/P0101/57ffb249-5289-4ef8-abd2-b6e2833c71da.png"
-          th:src="@{/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code}, storeFilename=${imageFile.storeFilename})}"
-          alt="이미지를 불러올 수 없습니다.">
+        <div th:class="|item item${imageFileStat.count}|">
+          <img width="200px" src="http://localhost:9080/attach/img/P0101/57ffb249-5289-4ef8-abd2-b6e2833c71da.png"
+            th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code}, storeFilename=${imageFile.storeFilename})}"
+            alt="이미지를 불러올 수 없습니다.">
+          <a href="" th:data-ftype="imageFiles" th:onclick="|delAttachFile(event, ${imageFile.uploadfileId})|" class="delBtn">삭제</a>
+        </div>
       </th:block>
-      <a href="" th:href="@{}" class="delBtn">삭제</a>
     </div>
   </div>
 
@@ -100,6 +104,42 @@
     $listBtn.addEventListener('click', evt => {
       location.href = '/products';
     });
+
+    //첨부파일 삭제
+    function delAttachFile(event, fid) {
+      event.preventDefault(); //기본이벤트 막기
+
+      if (!confirm('삭제하시겠습니까?')) return;
+
+      const url = `/api/attach/${fid}`;
+
+      fetch(url , {
+        method: 'DELETE',
+        headers: {'Accept': 'application/json'}
+      }).then(res => res.json)
+        .then(res => {
+          console.log(res);
+          if (res.header.rtcd == '00') {
+            const currEle = event.target;               //현재 요소(삭제버튼)
+            const ftype = currEle.dataset.ftype;
+            const toDelEle = currEle.closest('.item');  //삭제할 요소(첨부파일)
+            let parentEle = '';
+            switch(ftype) {
+              case "attachFile":
+                parentEle = toDelEle.closest('#attachFile');
+                break;
+              case "imageFiles":
+                parentEle = toDelEle.closest('#imageFiles');
+                break;
+            }
+            parentEle.removeChild(toDelEle);
+          } else {
+            throw new Error('삭제 오류');
+          }
+        })
+        .catch(err => console.log(err));
+
+    }
   </script>
 </body>
 

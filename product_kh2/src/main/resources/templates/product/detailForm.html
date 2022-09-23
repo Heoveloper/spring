@@ -36,8 +36,8 @@
     <button type="button" id="listBtn">목록</button>
   </div>
   <div th:if="${form.attachFile}">
-    <a href="http://localhost:9080/attach/file/P0101/22"
-       th:href="@{/attach/file/{attachCode}/{fid}(attachCode=${form.attachFile.code}, fid=${form.attachFile.uploadfileId})}"
+    <a href="http://localhost:9080/attach/file/P0101/41"
+       th:href="@{/api/attach/file/{attachCode}/{fid}(attachCode=${form.attachFile.code}, fid=${form.attachFile.uploadfileId})}"
        th:text="${form.attachFile.uploadFilename}">
     >상품설명</a>
 <!--       th:text="|${form.attachFile.uploadFilename}(${form.attachFile.fsize})(${form.attachFile.ftype})|"-->
@@ -46,8 +46,8 @@
     <th:block th:each="imageFile: ${form.imageFiles}">
           <img
           width="200px"
-          src="http://localhost:9080/attach/img/P0101/57ffb249-5289-4ef8-abd2-b6e2833c71da.png"
-          th:src="@{/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code}, storeFilename=${imageFile.storeFilename})}"
+          src="http://localhost:9080/attach/img/P0101/94a65d31-339b-472e-8019-5874e25e93b7.png"
+          th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code}, storeFilename=${imageFile.storeFilename})}"
           alt="이미지 파일을 불러올 수 없습니다."
           >
     </th:block>

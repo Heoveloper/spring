@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Component
 public class FileUtils {
-    @Value("${attach.root_dir}")
+    @Value("${attach.root_dir}") //application.properties 파일의 키값을 얻어온다.
     private String attachRoot;  //첨부파일 root 경로
 
     //MultipartFile -> UploadFile
@@ -66,7 +66,7 @@ public class FileUtils {
     //스토리지에 파일 저장
     private void storageFile(MultipartFile file, AttachCode code, String storeFileName) {
         try {
-            File f = new File(getPath(code, storeFileName));
+            File f = new File(getAttachFilePath(code, storeFileName));
             f.mkdirs();  //경로가 존재하지 않으면 생성
             file.transferTo(f);
         } catch (IOException e) {
@@ -74,8 +74,19 @@ public class FileUtils {
         }
     }
 
-    //첨부파일 경로
-    private String getPath(AttachCode code, String storeFileName) {
+    //첨부파일의 물리적인 경로 추출   ex) d:/tmp/P0101/xx-xxx-xxx-xxx.jpg
+    public String getAttachFilePath(AttachCode code, String storeFileName) {
         return this.attachRoot + code.name() + "/" + storeFileName;
+    }
+
+    //첨부파일 삭제
+    public void deleteAttachFile(AttachCode code, String storeFilename) {
+
+        File f = new File(getAttachFilePath(code, storeFilename));
+        if (f.exists()) {
+            f.delete();
+        } else {
+            throw new IllegalArgumentException("첨부파일 삭제 실패: " + code.name() + "-" + storeFilename);
+        }
     }
 }
