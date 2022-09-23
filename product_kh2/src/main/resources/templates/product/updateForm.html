@@ -24,7 +24,7 @@
   <div class="product-wrap">
     <h3>상품수정</h3>
     <div class="product-body">
-      <form id="updateForm" action="" th:action th:method="post" th:object="${form}">
+      <form id="updateForm" action="" th:action th:method="post" th:object="${form}" enctype="multipart/form-data">
         <div th:if="${#fields.hasGlobalErrors()}">
           <p class="fieldError" th:each="err:${#fields.globalErrors()}" th:text="${err}"></p>
         </div>
@@ -56,12 +56,12 @@
           <input type="file" th:field="*{files}" multiple="multiple">
           <div class="fieldError" th:errors="*{files}"></div>
         </div>
-      </form>
-    </div>
 
-    <div class="product-btngrp">
-      <button type="button" id="updateBtn">수정</button>
-      <button type="button" id="listBtn">목록</button>
+        <div class="product-btngrp">
+          <button type="button" id="updateBtn">수정</button>
+          <button type="button" id="listBtn">목록</button>
+        </div>
+      </form>
     </div>
 
     <!--파일 참조-->
@@ -69,19 +69,18 @@
       <div th:class="item">
         <a href="http://localhost:9080/attach/file/P0101/21"
            th:href="@{/api/attach/file/{attachCode}/{fid}(attachCode=${form.attachFile.code}, fid=${form.attachFile.uploadfileId})}"
-           th:text="${form.attachFile.uploadFilename}">
-          >상품설명</a>
-        <!--       th:text="|${form.attachFile.uploadFilename}(${form.attachFile.fsize})(${form.attachFile.ftype})|"-->
-        <a href="" th:data-ftype="attachFile" th:onclick="|delAttachFile(event, ${form.attachFile.uploadfileId})|" class="delBtn">삭제</a>
+           th:text="${form.attachFile.uploadFilename}">상품설명</a>
+        <!--th:text="|${form.attachFile.uploadFilename}(${form.attachFile.fsize})(${form.attachFile.ftype})|">상품설명</a>-->
+        <a href="" th:data-ftype="attachFile" class="delBtn" th:onclick="|delAttachFile(event, ${form.attachFile.uploadfileId})|">삭제</a>
       </div>
     </div>
     <div id="imageFiles" th:if="${form.imageFiles}">
       <th:block th:each="imageFile: ${form.imageFiles}">
         <div th:class="|item item${imageFileStat.count}|">
-          <img width="200px" src="http://localhost:9080/attach/img/P0101/57ffb249-5289-4ef8-abd2-b6e2833c71da.png"
-            th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code}, storeFilename=${imageFile.storeFilename})}"
-            alt="이미지를 불러올 수 없습니다.">
-          <a href="" th:data-ftype="imageFiles" th:onclick="|delAttachFile(event, ${imageFile.uploadfileId})|" class="delBtn">삭제</a>
+          <img width="200px" src="http://localhost:9080/attach/img/P0102/57ffb249-5289-4ef8-abd2-b6e2833c71da.png"
+               th:src="@{/api/attach/img/{attachCode}/{storeFilename}(attachCode=${imageFile.code}, storeFilename=${imageFile.storeFilename})}"
+               alt="이미지를 불러올 수 없습니다.">
+          <a href="" th:data-ftype="imageFiles" class="delBtn" th:onclick="|delAttachFile(event, ${imageFile.uploadfileId})|">삭제</a>
         </div>
       </th:block>
     </div>
@@ -112,7 +111,6 @@
       if (!confirm('삭제하시겠습니까?')) return;
 
       const url = `/api/attach/${fid}`;
-
       fetch(url , {
         method: 'DELETE',
         headers: {'Accept': 'application/json'}
@@ -123,7 +121,7 @@
             const currEle = event.target;               //현재 요소(삭제버튼)
             const ftype = currEle.dataset.ftype;
             const toDelEle = currEle.closest('.item');  //삭제할 요소(첨부파일)
-            let parentEle = '';
+            let parentEle = "";
             switch(ftype) {
               case "attachFile":
                 parentEle = toDelEle.closest('#attachFile');
@@ -138,7 +136,6 @@
           }
         })
         .catch(err => console.log(err));
-
     }
   </script>
 </body>
