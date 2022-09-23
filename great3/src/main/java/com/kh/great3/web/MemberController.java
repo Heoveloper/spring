@@ -72,6 +72,6 @@ public class MemberController {
 
         Long id = joinedMember.getMemNumber();
         redirectAttributes.addAttribute("id", id);
-        return "redirect:/member/{id}";  //가입완료화면
+        return "redirect:/";  //가입완료화면
     }
 }
