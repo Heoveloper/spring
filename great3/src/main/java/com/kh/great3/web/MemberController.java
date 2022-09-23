@@ -36,23 +36,23 @@ public class MemberController {
     ) {
         //검증로직
         //기본 검증
-        if (bindingResult.hasErrors()) {
-            log.info("errors={}", bindingResult);
-            return "join";
-        }
+        //if (bindingResult.hasErrors()) {
+        //    log.info("errors={}", bindingResult);
+        //    return "join";
+        //}
 
         //필드 검증(field error)
-        if (join.getMemId().length() > 15) {
-            bindingResult.rejectValue("memId", null, "아이디 길이는 15자 이하까지 가능합니다.");
-            return "join";
-        }
+        //if (join.getMemId().length() > 15) {
+        //    bindingResult.rejectValue("memId", null, "아이디 길이는 15자 이하까지 가능합니다.");
+        //    return "join";
+        //}
 
         //오브젝트 검증(object error)
         //비밀번호-비밀번호 확인 일치
-        if (join.getMemPassword() == join.getMemPasswordCheck()) {
-            bindingResult.reject(null, "비밀번호 일치합니다");
-            return "join";
-        }
+        //if (join.getMemPassword() == join.getMemPasswordCheck()) {
+        //    bindingResult.reject(null, "비밀번호 일치합니다");
+        //    return "join";
+        //}
 
 
         Member member = new Member();
@@ -62,6 +62,12 @@ public class MemberController {
         member.setMemName(join.getMemName());
         member.setMemNickname(join.getMemNickname());
         member.setMemEmail(join.getMemEmail());
+        member.setMemBusinessnumber(join.getMemBusinessnumber());
+        member.setMemStoreName(join.getMemStoreName());
+        member.setMemStorePhonenumber(join.getMemStorePhonenumber());
+        member.setMemStoreLocation(join.getMemStoreLocation());
+        member.setMemStoreIntroduce(join.getMemStoreIntroduce());
+        member.setMemStoreSns(join.getMemStoreSns());
         Member joinedMember = memberSVC.join(member);
 
         int id = joinedMember.getMemNumber();
