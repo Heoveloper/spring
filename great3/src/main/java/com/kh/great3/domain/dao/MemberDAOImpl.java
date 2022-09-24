@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Repository
@@ -45,6 +46,29 @@ public class MemberDAOImpl implements MemberDAO {
                 member.getMemBusinessnumber(), member.getMemStoreName(), member.getMemStorePhonenumber(), member.getMemStoreLocation(), member.getMemStoreIntroduce(), member.getMemStoreSns());
 
         return Long.valueOf(result);
+    }
+
+    /**
+     * 로그인
+     *
+     * @param memId 아이디
+     * @param memPassword 비밀번호
+     * @return 회원
+     */
+    @Override
+    public Optional<Member> login(String memId, String memPassword) {
+        StringBuffer sql = new StringBuffer();
+        sql.append("select * ");
+        sql.append("  from member ");
+        sql.append(" where mem_id = ? ");
+        sql.append("   and mem_password = ? ");
+
+        try {
+            Member member = jt.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(Member.class), memId, memPassword);
+            return Optional.of(member);
+        } catch (DataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     /**

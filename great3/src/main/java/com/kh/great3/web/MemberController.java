@@ -24,6 +24,7 @@ public class MemberController {
     @GetMapping("/join")
     public String join(Model model) {
         model.addAttribute("join", new Join());
+
         return "join";    //회원가입 화면
     }
 
@@ -34,10 +35,9 @@ public class MemberController {
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
     ) {
-        //검증로직
         //기본 검증
         //if (bindingResult.hasErrors()) {
-        //    log.info("errors={}", bindingResult);
+        //    log.info("errors = {}", bindingResult);
         //    return "join";
         //}
 

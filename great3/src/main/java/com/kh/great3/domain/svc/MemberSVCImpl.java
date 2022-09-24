@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -28,6 +29,18 @@ public class MemberSVCImpl implements MemberSVC {
         member.setMemNumber(generateMemberNumber);
         memberDAO.join(member);
         return memberDAO.findById(generateMemberNumber);
+    }
+
+    /**
+     * 로그인
+     *
+     * @param memId       아이디
+     * @param memPassword 패스워드
+     * @return 회원
+     */
+    @Override
+    public Optional<Member> login(String memId, String memPassword) {
+        return memberDAO.login(memId, memPassword);
     }
 
     /**

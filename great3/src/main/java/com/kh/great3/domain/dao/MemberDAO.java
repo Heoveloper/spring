@@ -3,6 +3,7 @@ package com.kh.great3.domain.dao;
 import com.kh.great3.domain.Member;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberDAO {
     /**
@@ -18,6 +19,14 @@ public interface MemberDAO {
      * @return 회원아이디
      */
     Long join(Member member);
+
+    /**
+     * 로그인
+     * @param memId 아이디
+     * @param memPassword 비밀번호
+     * @return 회원
+     */
+    Optional<Member> login(String memId, String memPassword);
 
     /**
      * 조회 by 회원아이디
