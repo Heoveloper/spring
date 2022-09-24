@@ -56,7 +56,7 @@
         <!-- member header -->
         <header th:fragment="fragMemHeader" class="header container">
             <nav class="top-menu content">
-                <li class="top-menu__member">회원 님
+                <li class="top-menu__member" th:if="${!session.isEmpty()}" th:text="${session.memNickname}">회원 님
                     <ul>
                         <li><a href="">판매글 작성</a></li>
                         <li><a href="">판매 내역</a></li>
@@ -64,7 +64,7 @@
                         <li><a href="">판매 목록</a></li>
                         <li><a href="">내 프로필</a></li>
                         <li><a href="/member/info_pwc.html">개인정보</a></li>
-                        <li><a href="/member/main_nonmem.html">로그아웃</a></li>
+                        <li><a th:href="@{/}">로그아웃</a></li>
                     </ul>
                 </li>
                 <a href="" class="top-menu__cs">고객센터</a>

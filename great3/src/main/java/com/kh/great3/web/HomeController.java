@@ -65,7 +65,7 @@ public class HomeController {
 
         //세션 생성
         HttpSession session = request.getSession(true);
-        session.setAttribute("LoginMember", loginMember);
+        session.setAttribute("loginMember", loginMember);
 
         if(requestURI.equals("/")){
             return "mainMember";
