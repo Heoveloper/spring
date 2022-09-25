@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <!--<th:block th:fragment="head">-->
 
-<head layout:fragment="head">
+<head>
     <th:block th:fragment="commonHead">
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,7 +22,7 @@
         <!-- nonmember header -->
         <header th:fragment="fragNonHeader" class="header container">
             <nav class="top-menu content">
-                <a th:href="@{/member/join}" class="top-menu__join">회원가입</a>
+                <a th:href="@{/join}" class="top-menu__join">회원가입</a>
                 <a th:href="@{/login}" class="top-menu__login">로그인</a>
                 <a href="" class="top-menu__cs">고객센터</a>
             </nav>
@@ -56,20 +56,20 @@
         <!-- member header -->
         <header th:fragment="fragMemHeader" class="header container">
             <nav class="top-menu content">
-                <li class="top-menu__member" th:if="${!session.isEmpty()}" th:text="${session.memNickname}">회원 님
+                <li th:class="top-menu__member" th:if="${!session.isEmpty()}" th:text="${session.loginMember.memNickname} + 님">회원 님
                     <ul>
                         <li><a href="">판매글 작성</a></li>
                         <li><a href="">판매 내역</a></li>
                         <li><a href="">판매 정보</a></li>
                         <li><a href="">판매 목록</a></li>
                         <li><a href="">내 프로필</a></li>
-                        <li><a href="/member/info_pwc.html">개인정보</a></li>
+                        <li><a th:href="@{/member/infoChk}">개인정보</a></li>
                         <li><a th:href="@{/}">로그아웃</a></li>
                     </ul>
                 </li>
                 <a href="" class="top-menu__cs">고객센터</a>
             </nav>
-            <div class="logo content"><a href="/member/main_mem.html">GR<span>EAT</span></a></div>
+            <div class="logo content"><a th:href="@{/}">GR<span>EAT</span></a></div>
             <nav class="bottom-menu content">
                 <div class="category">
                     <ul>

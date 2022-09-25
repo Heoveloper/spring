@@ -21,8 +21,8 @@ public class LogInterceptor implements HandlerInterceptor {
         log.info("preHandle called!");
 
         String requestURI = request.getRequestURI(); //클라이언트의 요청 URI
+        String uuid = String.valueOf(UUID.randomUUID()); //요청 추적번호
 
-        UUID uuid = UUID.randomUUID(); //요청 추적번호
         request.setAttribute("transactionId", uuid);
 
         log.info("REQUEST [{}][{}][{}]", uuid, requestURI, handler);
