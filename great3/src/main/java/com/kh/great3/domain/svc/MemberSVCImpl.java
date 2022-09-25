@@ -28,7 +28,7 @@ public class MemberSVCImpl implements MemberSVC {
         Long generateMemberNumber = memberDAO.generateMemberNumber();
         member.setMemNumber(generateMemberNumber);
         memberDAO.join(member);
-        return memberDAO.findById(generateMemberNumber);
+        return memberDAO.findByMemNumber(generateMemberNumber);
     }
 
     /**
@@ -50,8 +50,8 @@ public class MemberSVCImpl implements MemberSVC {
      * @return 회원정보
      */
     @Override
-    public Member findById(Long memNumber) {
-        return memberDAO.findById(memNumber);
+    public Member findByMemNumber(Long memNumber) {
+        return memberDAO.findByMemNumber(memNumber);
     }
 
     /**

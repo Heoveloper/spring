@@ -26,14 +26,16 @@
             <div class="msg content">
                 <p>개인정보 조회 및 수정을 원하시면 비밀번호를 입력해주세요.</p>
             </div>
-            <div class="pwc">
-                <i class="fa-solid fa-key"></i>
-                <i class="bar"></i>
-                <input type="password" placeholder="비밀번호를 입력하세요." />
-            </div>
-            <div class="wrap-confirm-btn content">
-                <button class="btn confirm-btn" onclick="location.href='/member/info_own.html'">확인</button>
-            </div>
+            <form th:method="POST" action="" th:object="${infoChk}">
+                <div class="pwc">
+                    <i class="fa-solid fa-key"></i>
+                    <i class="bar"></i>
+                    <input type="password" th:field="*{memPassword}" placeholder="비밀번호를 입력하세요." />
+                </div>
+                <div class="wrap-confirm-btn content">
+                    <button type="submit" class="btn confirm-btn">확인</button>
+                </div>
+            </form>
         </main>
         <!-- //main -->
 

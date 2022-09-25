@@ -78,7 +78,7 @@ public class MemberDAOImpl implements MemberDAO {
      * @return 회원정보
      */
     @Override
-    public Member findById(Long memNumber) {
+    public Member findByMemNumber(Long memNumber) {
         StringBuffer sql = new StringBuffer();
 
         sql.append("select mem_number, mem_type, mem_id, mem_password, mem_name, mem_nickname, mem_email, ");
@@ -109,12 +109,22 @@ public class MemberDAOImpl implements MemberDAO {
         int result = 0;
         StringBuffer sql = new StringBuffer();
         sql.append("update member ");
-        sql.append("   set nickname = ?, ");
-        sql.append("       pw = ?, ");
-        sql.append("       udate = systimestamp ");
-        sql.append(" where member_id = ? ");
+        sql.append("   set mem_id = ?, ");
+        sql.append("       mem_password = ?, ");
+        sql.append("       mem_name = ?, ");
+        sql.append("       mem_nickname = ?, ");
+        sql.append("       mem_email = ?, ");
+        sql.append("       mem_businessnumber = ?, ");
+        sql.append("       mem_store_name = ?, ");
+        sql.append("       mem_store_phonenumber = ?, ");
+        sql.append("       mem_store_location = ?, ");
+        sql.append("       mem_store_introduce = ?, ");
+        sql.append("       mem_store_sns = ? ");
+        sql.append(" where mem_number = ? ");
 
-        result = jt.update(sql.toString(), member.getMemNickname(),  member.getMemPassword(), memNumber);
+        result = jt.update(sql.toString(), member.getMemId(), member.getMemPassword(), member.getMemName(), member.getMemNickname(), member.getMemEmail(),
+                member.getMemBusinessnumber(), member.getMemStoreName(), member.getMemStorePhonenumber(),
+                member.getMemStoreLocation(), member.getMemStoreIntroduce(), member.getMemStoreSns(), memNumber);
         return Long.valueOf(result);
     }
 

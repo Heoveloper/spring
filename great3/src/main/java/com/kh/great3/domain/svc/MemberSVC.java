@@ -26,7 +26,7 @@ public interface MemberSVC {
      * @param memNumber 회원아이디
      * @return 회원정보
      */
-    Member findById(Long memNumber);
+    Member findByMemNumber(Long memNumber);
 
     /**
      * 수정
