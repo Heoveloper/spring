@@ -104,39 +104,40 @@
       location.href = '/products';
     });
 
-    //첨부파일 삭제
-    function delAttachFile(event, fid) {
-      event.preventDefault(); //기본이벤트 막기
+    //첨부파일삭제
+     function delAttachFile(event, fid){
+        event.preventDefault(); // 기본이벤트 막기
 
-      if (!confirm('삭제하시겠습니까?')) return;
+        if(!confirm('삭제하시겠습니까')) return;
 
-      const url = `/api/attach/${fid}`;
-      fetch(url , {
-        method: 'DELETE',
-        headers: {'Accept': 'application/json'}
-      }).then(res => res.json)
-        .then(res => {
-          console.log(res);
-          if (res.header.rtcd == '00') {
-            const currEle = event.target;               //현재 요소(삭제버튼)
-            const ftype = currEle.dataset.ftype;
-            const toDelEle = currEle.closest('.item');  //삭제할 요소(첨부파일)
-            let parentEle = "";
-            switch(ftype) {
-              case "attachFile":
-                parentEle = toDelEle.closest('#attachFile');
-                break;
-              case "imageFiles":
-                parentEle = toDelEle.closest('#imageFiles');
-                break;
-            }
-            parentEle.removeChild(toDelEle);
-          } else {
-            throw new Error('삭제 오류');
+        const url = `/api/attach/${fid}`;
+        fetch(url, {
+          method:'DELETE',
+          headers:{
+            'Accept':'application/json'
           }
-        })
-        .catch(err => console.log(err));
-    }
+        }).then(res => res.json())
+          .then(res => {
+            console.log(res);
+            if(res.header.rtcd == '00'){
+               const currEle = event.target;                //현재 요소(삭제버튼)
+               const ftype = currEle.dataset.ftype;         //첨부 유형
+               const toDelEle = currEle.closest('.item');   //삭제할 요소(첨부)
+               let parentEle = "";
+               switch(ftype){
+                case "attachFile" :
+                  parentEle = toDelEle.closest('#attachFile'); break;
+                case "imageFiles" :
+                  parentEle = toDelEle.closest('#imageFiles'); break;
+               }
+               parentEle.removeChild(toDelEle);
+            }else{
+              throw new Error('삭제 오류');
+            }
+          })
+          .catch(err => console.log(err));
+
+     }
   </script>
 </body>
 
