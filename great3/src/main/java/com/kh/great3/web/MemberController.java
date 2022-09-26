@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -36,18 +37,14 @@ public class MemberController {
     public String infoChk(
             @Valid @ModelAttribute("infoChk") InfoChk infoChk,
             BindingResult bindingResult,
-            @PathVariable("memNumber") Long memNumber,
+            RedirectAttributes redirectAttributes,
             HttpServletRequest request
     ) {
         HttpSession session = request.getSession(false);
-        session.setAttribute("infoMember", infoChk);
+        session.getAttribute("memNumber");
+        log.info("se");
 
-        if (session.getAttribute(infoChk.getMemType()) == "customer") {
-
-            return "redirect:/member/cust/{memNumber}";
-        }
-
-        return "redirect:/member/own/{memNumber}";
+        return "redirect:/member/cust/{memNumber}";
     }
 
     //고객회원정보 조회 및 수정 화면
@@ -56,9 +53,18 @@ public class MemberController {
             @PathVariable("memNumber") Long memNumber,
             Model model
     ){
-
         Member findedMember = memberSVC.findByMemNumber(memNumber);
-        model.addAttribute("info", findedMember);
+
+        Info info = new Info();
+        info.setMemNumber(findedMember.getMemNumber());
+        info.setMemType(findedMember.getMemType());
+        info.setMemId(findedMember.getMemId());
+        info.setMemPassword(findedMember.getMemPassword());
+        info.setMemName(findedMember.getMemName());
+        info.setMemNickname(findedMember.getMemNickname());
+        info.setMemEmail(findedMember.getMemEmail());
+
+        model.addAttribute("info", info);
         return "infoCust"; //회원 수정화면
     }
 
@@ -68,8 +74,24 @@ public class MemberController {
             @PathVariable("memNumber") Long memNumber,
             Model model
     ){
-
         Member findedMember = memberSVC.findByMemNumber(memNumber);
+
+        Info info = new Info();
+        info.setMemNumber(findedMember.getMemNumber());
+        info.setMemType(findedMember.getMemType());
+        info.setMemId(findedMember.getMemId());
+        info.setMemPassword(findedMember.getMemPassword());
+        info.setMemName(findedMember.getMemName());
+        info.setMemNickname(findedMember.getMemNickname());
+        info.setMemEmail(findedMember.getMemEmail());
+        info.setMemBusinessnumber(findedMember.getMemBusinessnumber());
+        info.setMemStoreName(findedMember.getMemStoreName());
+        info.setMemStorePhonenumber(findedMember.getMemStorePhonenumber());
+        info.setMemStoreLocation(findedMember.getMemStoreLocation());
+        info.setMemStoreIntroduce(findedMember.getMemStoreIntroduce());
+        info.setMemStoreSns(findedMember.getMemStoreSns());
+
+
         model.addAttribute("info", findedMember);
         return "infoOwn"; //회원 수정화면
     }
@@ -77,9 +99,10 @@ public class MemberController {
     //고객회원정보 수정 처리
     @PostMapping("/cust/{memNumber}")
     public String editCust(
+            @PathVariable("memNumber") Long memNumber,
             @Valid @ModelAttribute("info") Info info,
             BindingResult bindingResult,
-            @PathVariable("memNumber") Long memNumber
+            RedirectAttributes redirectAttributes
     ) {
         Member member = new Member();
         member.setMemPassword(info.getMemPassword());
@@ -92,15 +115,18 @@ public class MemberController {
             return "infoCust";
         }
 
+        redirectAttributes.addAttribute("memNumber", member.getMemNumber());
+
         return "redirect:/member/cust/{memNumber}";
     }
 
     //점주회원정보 수정 처리
     @PostMapping("/own/{memNumber}")
     public String editOwn(
+            @PathVariable("memNumber") Long memNumber,
             @Valid @ModelAttribute("info") Info info,
             BindingResult bindingResult,
-            @PathVariable("memNumber") Long memNumber
+            RedirectAttributes redirectAttributes
     ) {
         Member member = new Member();
         member.setMemPassword(info.getMemPassword());
@@ -118,6 +144,8 @@ public class MemberController {
         if (updatedRow == 0) {
             return "infoOwn";
         }
+
+        redirectAttributes.addAttribute("memNumber", member.getMemNumber());
 
         return "redirect:/member/own/{memNumber}";
     }

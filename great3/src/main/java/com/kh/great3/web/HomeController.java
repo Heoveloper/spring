@@ -28,22 +28,14 @@ public class HomeController {
     private final MemberSVC memberSVC;
 
     @GetMapping
-    public String home(
-            //@SessionAttribute(value = "login", required = false) Optional<Member> login,
-            //HttpServletRequest request,
-            //Model model
-    ) {
+    public String home(HttpServletRequest request) {
 
-        //세션이 없으면 로그인 전 화면 이동
-        //if (login == null) {
-        //    return "main";
-        //}
+        String view = null;
+        HttpSession session = request.getSession(false);
+        view = (session == null) ? "main" : "mainMember" ;
 
-        //세션이 존재하면 로그인 후 화면 이동
-        //model.addAttribute("login", login);
-        //return "mainMember";
-
-        return "main";
+        return view;
+//        return "main";
     }
 
     //회원가입 화면
@@ -124,7 +116,7 @@ public class HomeController {
             @Valid @ModelAttribute("login") Login login,
             BindingResult bindingResult,
             HttpServletRequest request,
-            @RequestParam(value = "requestURI", required = false, defaultValue = "/") String requestURI
+            @RequestParam(required = false, defaultValue = "/") String redirectUrl
     ){
         //기본 검증
         if (bindingResult.hasErrors()) {
@@ -150,16 +142,21 @@ public class HomeController {
         HttpSession session = request.getSession(true);
         session.setAttribute("loginMember", loginMember);
 
-        if(requestURI.equals("/")){
-            return "mainMember";
-        }
+//        if(requestURI.equals("/")){
+//            return "mainMember";
+//        }
+
+//        log.info("aaaaaaaaaaaaaaaaaaaaaa: {}", requestURI);
+//        if(requestURI.equals("/")) {
+//            return "mainMember";
+//        }
 
 //        return "redirect:/";
-        return "redirect:" + requestURI;
+        return "redirect:" + redirectUrl;
     }
 
     //로그아웃
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public String logout(HttpServletRequest request){
         //세션 조회
         HttpSession session = request.getSession(false);
