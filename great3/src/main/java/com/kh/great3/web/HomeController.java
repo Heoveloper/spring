@@ -132,15 +132,14 @@ public class HomeController {
             return "login";
         }
 
-        //회원인 경우
-        Member findedMember = member.get();
-
         //세션에 회원정보 저장
-        LoginMember loginMember = new LoginMember(findedMember.getMemNumber(), findedMember.getMemType(), findedMember.getMemId(), findedMember.getMemNickname(), findedMember.getMemStoreName());
+        LoginMember loginMember = new LoginMember(member.get().getMemNumber(), member.get().getMemType(),
+                member.get().getMemId(), member.get().getMemNickname(), member.get().getMemStoreName());
 
         //세션 생성
         HttpSession session = request.getSession(true);
         session.setAttribute("loginMember", loginMember);
+        session.setAttribute("memNumber", member.get().getMemNumber());
 
 //        if(requestURI.equals("/")){
 //            return "mainMember";

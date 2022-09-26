@@ -37,14 +37,17 @@ public class MemberController {
     public String infoChk(
             @Valid @ModelAttribute("infoChk") InfoChk infoChk,
             BindingResult bindingResult,
-            RedirectAttributes redirectAttributes,
-            HttpServletRequest request
+            HttpServletRequest request,
+            RedirectAttributes redirectAttributes
+//            HttpSession session
     ) {
         HttpSession session = request.getSession(false);
-        session.getAttribute("memNumber");
-        log.info("se");
+        Object memNum = session.getAttribute("memNumber");
+        log.info("cccccccccc={}", memNum);
 
-        return "redirect:/member/cust/{memNumber}";
+        redirectAttributes.addAttribute("memNum", memNum);
+
+        return "redirect:/member/cust/{memNum}";
     }
 
     //고객회원정보 조회 및 수정 화면
