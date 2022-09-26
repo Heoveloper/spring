@@ -43,15 +43,22 @@ public class MemberController {
     ) {
         HttpSession session = request.getSession(false);
         Object memNum = session.getAttribute("memNumber");
+        Object memType = session.getAttribute("memType");
         log.info("cccccccccc={}", memNum);
+        log.info("zzzzzzzzzz={}", memType);
 
         redirectAttributes.addAttribute("memNum", memNum);
+        redirectAttributes.addAttribute("memType", memType);
 
-        return "redirect:/member/cust/{memNum}";
+        if (memType == "owner") {
+            return "redirect:/member/{memType}/{memNum}";
+        }
+
+        return "redirect:/member/{memType}/{memNum}";
     }
 
     //고객회원정보 조회 및 수정 화면
-    @GetMapping("/cust/{memNumber}")
+    @GetMapping("/customer/{memNumber}")
     public String infoCust(
             @PathVariable("memNumber") Long memNumber,
             Model model
@@ -72,7 +79,7 @@ public class MemberController {
     }
 
     //점주회원정보 조회 및 수정 화면
-    @GetMapping("/own/{memNumber}")
+    @GetMapping("/owner/{memNumber}")
     public String infoOwn(
             @PathVariable("memNumber") Long memNumber,
             Model model
@@ -100,37 +107,56 @@ public class MemberController {
     }
 
     //고객회원정보 수정 처리
-    @PostMapping("/cust/{memNumber}")
+    @PostMapping("/customer/{memNum}")
     public String editCust(
-            @PathVariable("memNumber") Long memNumber,
             @Valid @ModelAttribute("info") Info info,
             BindingResult bindingResult,
+            HttpServletRequest request,
             RedirectAttributes redirectAttributes
     ) {
+        //검증
+        if(bindingResult.hasErrors()){
+            log.info("bindingResult={}", bindingResult);
+            return "infoCust";
+        }
+
+        HttpSession session = request.getSession(false);
+        Object memNum = session.getAttribute("memNumber");
+        Object memType = session.getAttribute("memType");
+
         Member member = new Member();
         member.setMemPassword(info.getMemPassword());
         member.setMemName(info.getMemName());
         member.setMemNickname(info.getMemNickname());
         member.setMemEmail(info.getMemEmail());
 
-        Long updatedRow = memberSVC.update(memNumber, member);
+        redirectAttributes.addAttribute("memNum", memNum);
+        redirectAttributes.addAttribute("memType", memType);
+
+        Long updatedRow = memberSVC.update((Long) memNum, member);
         if (updatedRow == 0) {
             return "infoCust";
         }
 
         redirectAttributes.addAttribute("memNumber", member.getMemNumber());
 
-        return "redirect:/member/cust/{memNumber}";
+        return "redirect:/member/customer/{memNum}";
     }
 
     //점주회원정보 수정 처리
-    @PostMapping("/own/{memNumber}")
+    @PostMapping("/owner/{memNumber}")
     public String editOwn(
             @PathVariable("memNumber") Long memNumber,
             @Valid @ModelAttribute("info") Info info,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
     ) {
+        //검증
+        if(bindingResult.hasErrors()){
+            log.info("bindingResult={}", bindingResult);
+            return "infoOwn";
+        }
+
         Member member = new Member();
         member.setMemPassword(info.getMemPassword());
         member.setMemName(info.getMemName());
@@ -150,6 +176,6 @@ public class MemberController {
 
         redirectAttributes.addAttribute("memNumber", member.getMemNumber());
 
-        return "redirect:/member/own/{memNumber}";
+        return "redirect:/member/owner/{memNumber}";
     }
 }

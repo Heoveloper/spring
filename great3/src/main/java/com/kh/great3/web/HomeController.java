@@ -140,6 +140,7 @@ public class HomeController {
         HttpSession session = request.getSession(true);
         session.setAttribute("loginMember", loginMember);
         session.setAttribute("memNumber", member.get().getMemNumber());
+        session.setAttribute("memType", member.get().getMemType());
 
 //        if(requestURI.equals("/")){
 //            return "mainMember";
