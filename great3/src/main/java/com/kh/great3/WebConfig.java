@@ -30,6 +30,9 @@ public class WebConfig implements WebMvcConfigurer {
         whiteList.add("/");
         whiteList.add("/join");
         whiteList.add("/joinComplete");
+        whiteList.add("/findId");
+        whiteList.add("/findPw");
+        whiteList.add("/resetPw");
 
         registry.addInterceptor(new LoginInterceptor())
                 .order(2)

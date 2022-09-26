@@ -2,9 +2,7 @@ package com.kh.great3.web;
 
 import com.kh.great3.domain.Member;
 import com.kh.great3.domain.svc.MemberSVC;
-import com.kh.great3.web.form.Join;
-import com.kh.great3.web.form.JoinComplete;
-import com.kh.great3.web.form.Login;
+import com.kh.great3.web.form.*;
 import com.kh.great3.web.session.LoginMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -103,9 +101,33 @@ public class HomeController {
         return "joinComplete";    //회원가입 화면
     }
 
+    //아이디 찾기 화면
+    @GetMapping("/findId")
+    public String findId(Model model) {
+        model.addAttribute("findId", new findId());
+
+        return "findId";
+    }
+
+    //비밀번호 찾기 화면
+    @GetMapping("/findPw")
+    public String findPw(Model model) {
+        model.addAttribute("findPw", new findPw());
+
+        return "findPw";
+    }
+
+    //비밀번호 재설정 화면
+    @GetMapping("/resetPw")
+    public String resetPw(Model model) {
+        model.addAttribute("resetPw", new resetPw());
+
+        return "resetPw";
+    }
+
     //로그인 화면
     @GetMapping("/login")
-    public String loginForm(@ModelAttribute("login") Login login){
+    public String login(@ModelAttribute("login") Login login){
 
         return "login";
     }
