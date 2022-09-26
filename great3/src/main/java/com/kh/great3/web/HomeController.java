@@ -141,17 +141,12 @@ public class HomeController {
         session.setAttribute("loginMember", loginMember);
         session.setAttribute("memNumber", member.get().getMemNumber());
         session.setAttribute("memType", member.get().getMemType());
+        session.setAttribute("memNickname", member.get().getMemNickname());
 
 //        if(requestURI.equals("/")){
 //            return "mainMember";
 //        }
 
-//        log.info("aaaaaaaaaaaaaaaaaaaaaa: {}", requestURI);
-//        if(requestURI.equals("/")) {
-//            return "mainMember";
-//        }
-
-//        return "redirect:/";
         return "redirect:" + redirectUrl;
     }
 

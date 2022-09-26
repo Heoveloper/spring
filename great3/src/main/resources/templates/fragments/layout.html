@@ -56,7 +56,7 @@
         <!-- member header -->
         <header th:fragment="fragMemHeader" class="header container">
             <nav class="top-menu content">
-                <li th:class="top-menu__member"><a th:if="${!session.isEmpty()}" th:text="${session.loginMember.memNickname} + 님">회원님</a>
+                <li th:class="top-menu__member"><a th:if="${!session.isEmpty()}" th:text="${session.memNickname} + 님">회원님</a>
                     <ul>
                         <li><a href="">판매글 작성</a></li>
                         <li><a href="">판매 내역</a></li>

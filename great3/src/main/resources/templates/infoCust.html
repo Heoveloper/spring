@@ -25,7 +25,7 @@
                 <h2>회원정보</h2>
             </div>
             <div class="wrap-info content">
-                <form method="POST" action="" class="info" th:object="${info}">
+                <form method="POST" action="/member/customer/${session.loginMember.memNumber}" class="info" th:object="${info}">
                     <div class="info-ele">
                         <div class="info-ele--1"><label for="">아이디<span> *</span></label></div>
                         <div class="info-ele--2"><input type="text" th:field="*{memId}" placeholder="아이디를 입력하세요." readonly></div>
@@ -43,17 +43,17 @@
                     </div>
                     <div class="vali-ele">
                         <div class="vali-ele--1"></div>
-                        <div class="vali-ele--2"><span th:text="${err}"></span></div>
+                        <div class="vali-ele--2"><span th:errors="*{memPassword}"></span></div>
                         <div class="vali-ele--3"></div>
                     </div>
                     <div class="info-ele">
                         <div class="info-ele--1"><label for="">비밀번호 확인<span> *</span></label></div>
-                        <div class="info-ele--2"><input type="password" placeholder="비밀번호를 재입력하세요."></div>
+                        <div class="info-ele--2"><input type="password" th:field="*{memPasswordCheck}" placeholder="비밀번호를 재입력하세요."></div>
                         <div class="info-ele--3"></div>
                     </div>
                     <div class="vali-ele">
                         <div class="vali-ele--1"></div>
-                        <div class="vali-ele--2"></div>
+                        <div class="vali-ele--2"><span th:errors="*{memPasswordCheck}"></span></div>
                         <div class="vali-ele--3"></div>
                     </div>
                     <div class="info-ele">
@@ -63,7 +63,7 @@
                     </div>
                     <div class="vali-ele">
                         <div class="vali-ele--1"></div>
-                        <div class="vali-ele--2"></div>
+                        <div class="vali-ele--2"><span th:errors="*{memName}"></span></div>
                         <div class="vali-ele--3"></div>
                     </div>
                     <div class="info-ele">
@@ -73,7 +73,7 @@
                     </div>
                     <div class="vali-ele">
                         <div class="vali-ele--1"></div>
-                        <div class="vali-ele--2"></div>
+                        <div class="vali-ele--2"><span th:errors="*{memNickname}"></span></div>
                         <div class="vali-ele--3"></div>
                     </div>
                     <div class="info-ele">
@@ -83,7 +83,7 @@
                     </div>
                     <div class="vali-ele">
                         <div class="vali-ele--1"></div>
-                        <div class="vali-ele--2"></div>
+                        <div class="vali-ele--2"><span th:errors="*{memEmail}"></span></div>
                         <div class="vali-ele--3"></div>
                     </div>
                     <div class="info-ele">

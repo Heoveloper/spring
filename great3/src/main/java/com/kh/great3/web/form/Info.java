@@ -2,17 +2,30 @@ package com.kh.great3.web.form;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Data
 public class Info {
     private Long memNumber;                      //varchar2(9)
     private String memType;                     //varchar2(15)
+
+    @NotBlank
     private String memId;                       //varchar2(30)
+
+    @NotBlank
     private String memPassword;                 //varchar2(18)
+
+    @NotBlank
     private String memPasswordCheck;
+
+    @NotBlank
     private String memName;                     //varchar2(18)
+
+    @NotBlank
     private String memNickname;                 //varchar2(18)
+
+    @NotBlank
     private String memEmail;                    //varchar2(30)
 
     private String memBusinessnumber;           //varchar2(10)

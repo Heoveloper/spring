@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
@@ -17,7 +16,7 @@ public class Join {
     private String memId;                       //varchar2(30)
 
     @NotBlank(message = "필수 입력항목입니다.")
-    @Size(min = 8, max = 15)
+//    @Size(min = 8, max = 15)
     private String memPassword;                 //varchar2(18)
 
     @NotBlank(message = "필수 입력항목입니다.")
