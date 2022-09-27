@@ -23,7 +23,6 @@ public class ApiMemberController {
 
     private final MemberSVC memberSVC;
 
-
     //아이디 찾기
     @PostMapping("/findId")
     public ApiResponse<Object> findId(@RequestBody FindId findId) {
