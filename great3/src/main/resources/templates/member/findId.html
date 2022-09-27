@@ -9,7 +9,6 @@
     <th:block th:replace="fragments/layout :: commonHead"></th:block>
     <!-- head -->
     <link rel="stylesheet" th:href="@{/css/member/findId.css}">
-    <script th:src="@{/js/member/findId.js}"></script>
     <title>아이디 찾기</title>
 </head>
 
@@ -32,16 +31,16 @@
                     <div class="name">
                         <i class="icon__name fa-regular fa-address-card"></i>
                         <i class="bar__name"></i>
-                        <input type="text" placeholder="이름을 입력하세요." />
+                        <input id="inputName" type="text" placeholder="이름을 입력하세요." />
                     </div>
                     <div class="email">
                         <i class="icon__email fa-regular fa-envelope"></i>
                         <i class="bar__email"></i>
-                        <input type="email" placeholder="이메일 주소를 입력하세요." />
+                        <input id="inputEmail" type="email" placeholder="이메일 주소를 입력하세요." />
                     </div>
                 </div>
                 <div class="wrap-confirm-btn content">
-                    <button class="btn confirm-btn" onclick="location.href='javascript:show();'">확인</button>
+                    <button type="button" class="btn confirm-btn">확인</button>
                 </div>
             </div>
         </main>
@@ -58,8 +57,8 @@
                     <div class="msg-find-id">
                         <h2>아이디 찾기가 완료되었습니다.</h2>
                         <div class="msg">
-                            <p><label for="">회원님의 아이디는 <span>abc1234</span> 입니다.</label></p>
-                            <p><label for="">가입일자는 <span>2022.08.15</span> 입니다.</label></p>
+                            <p><label for="">회원님의 아이디는 <span class="span-id">abc1234</span> 입니다.</label></p>
+                            <p><label for="">가입일자는 <span class="span-reg">2022.08.15</span> 입니다.</label></p>
                         </div>
                     </div>
                     <div class="location-choice">
@@ -71,5 +70,46 @@
         </div>
         <!-- //모달 팝업 -->
     </div>
+
+    <script>
+        const $confirmBtn = document.querySelector('.confirm-btn');
+        const $spanId = document.querySelector('.span-id');
+        const $spanReg = document.querySelector('.span-reg');
+
+        $confirmBtn.addEventListener('click', e => {
+            $spanId.textContent = '찾은 아이디';
+            $spanReg.textContent = '찾은 등록일자';
+
+            const name = inputName.value;
+            const email = inputEmail.value;
+            findId(name, email);
+
+            console.log(name, email);
+
+            document.querySelector(".background").className = "background show";
+           
+        });
+
+        function findId(name, email) {
+            const url = `/api/member/findId`;
+            const data = { "memName" : name, "memEmail" : email };
+            fetch(url, {
+                method:'POST',
+                headers:{
+                  'Accept':'application/json',
+                  'Content-type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(res => res.json())
+              .then(res => {
+                console.log(res);
+                if (res.header.rtcd == '00') {
+                   $spanId.textContent = res.data;
+                } else {
+                    console.log(res);
+                }
+              }).catch(err => console.log(err));
+        }
+    </script>
 </body>
 </html>

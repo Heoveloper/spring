@@ -31,6 +31,11 @@ dependencies {
 
 	//dependency for layout
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
+	/* 롬복을 junit에서 사용하고자 할때 반드시 포함 */
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+	/******************************************/
 }
 
 tasks.named('test') {

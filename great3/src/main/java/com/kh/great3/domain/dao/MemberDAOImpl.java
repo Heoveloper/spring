@@ -49,6 +49,31 @@ public class MemberDAOImpl implements MemberDAO {
     }
 
     /**
+     * 아이디 찾기
+     *
+     * @param memName  이름
+     * @param memEmail 이메일
+     * @return 회원아이디
+     */
+//    @Override
+//    public String findId(String memName, String memEmail) {
+//        StringBuffer sql = new StringBuffer();
+//        sql.append("select mem_id, mem_regtime ");
+//        sql.append("  from member ");
+//        sql.append(" where mem_name = ?, ");
+//        sql.append("   and mem_email = ? ");
+//
+//        Member findedNameAndEmail = null;
+//        try {
+//            findedNameAndEmail = jt.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(Member.class), memName, memEmail);
+//        } catch (DataAccessException e) {
+//            log.info("찾고자하는 회원이 없습니다!={}, {}", memName, memEmail);
+//        }
+//
+//        return findedNameAndEmail;
+//    }
+
+    /**
      * 로그인
      *
      * @param memId 아이디
@@ -93,6 +118,27 @@ public class MemberDAOImpl implements MemberDAO {
             findedMember = jt.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(Member.class), memNumber);
         } catch (DataAccessException e) {
             log.info("찾고자하는 회원이 없습니다!={}", memNumber);
+        }
+
+        return findedMember;
+    }
+
+    @Override
+    public Member findByMemNameAndMemEmail (String memName, String memEmail) {
+        StringBuffer sql = new StringBuffer();
+
+        sql.append("select mem_id ");
+        sql.append("  from member ");
+        sql.append(" where mem_name = ? ");
+        sql.append("   and mem_email = ? ");
+
+        Member findedMember = null;
+        try {
+            //BeanPropertyRowMapper는 매핑되는 자바클래스에 디폴트 생성자 필수!
+            findedMember = jt.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(Member.class), memName, memEmail);
+        } catch (DataAccessException e) {
+            log.info("찾고자하는 회원이 없습니다!={} {}", memName, memEmail);
+            throw e;
         }
 
         return findedMember;

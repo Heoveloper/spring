@@ -14,6 +14,15 @@ public interface MemberSVC {
     Member join(Member member);
 
     /**
+     * 아이디 찾기
+     *
+     * @param memName  이름
+     * @param memEmail 이메일
+     * @return 회원아이디
+     */
+//    Member findId(String memName, String memEmail);
+
+    /**
      * 로그인
      * @param memId 아이디
      * @param memPassword 패스워드
@@ -27,6 +36,8 @@ public interface MemberSVC {
      * @return 회원정보
      */
     Member findByMemNumber(Long memNumber);
+
+    Member findByMemNameAndMemEmail(String memName, String memEmail);
 
     /**
      * 수정

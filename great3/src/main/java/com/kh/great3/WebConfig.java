@@ -33,6 +33,8 @@ public class WebConfig implements WebMvcConfigurer {
         whiteList.add("/findId");
         whiteList.add("/findPw");
         whiteList.add("/resetPw");
+        whiteList.add("/api/member/**");
+        whiteList.add("/error");
 
         registry.addInterceptor(new LoginInterceptor())
                 .order(2)

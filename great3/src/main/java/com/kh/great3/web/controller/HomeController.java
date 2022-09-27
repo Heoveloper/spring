@@ -2,6 +2,7 @@ package com.kh.great3.web.controller;
 
 import com.kh.great3.domain.Member;
 import com.kh.great3.domain.svc.MemberSVC;
+import com.kh.great3.web.api.member.FindId;
 import com.kh.great3.web.form.*;
 import com.kh.great3.web.session.LoginMember;
 import lombok.RequiredArgsConstructor;
@@ -103,7 +104,7 @@ public class HomeController {
     //아이디 찾기 화면
     @GetMapping("/findId")
     public String findId(Model model) {
-        model.addAttribute("findId", new findId());
+        model.addAttribute("findId", new FindId());
 
         return "member/findId";
     }
@@ -111,7 +112,7 @@ public class HomeController {
     //비밀번호 찾기 화면
     @GetMapping("/findPw")
     public String findPw(Model model) {
-        model.addAttribute("findPw", new findPw());
+        model.addAttribute("findPw", new FindPw());
 
         return "member/findPw";
     }
@@ -119,7 +120,7 @@ public class HomeController {
     //비밀번호 재설정 화면
     @GetMapping("/resetPw")
     public String resetPw(Model model) {
-        model.addAttribute("resetPw", new resetPw());
+        model.addAttribute("resetPw", new ResetPw());
 
         return "member/resetPw";
     }

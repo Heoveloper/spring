@@ -8,17 +8,25 @@ import java.util.Optional;
 public interface MemberDAO {
     /**
      * 신규 회원번호 생성
-     * @return 회원아이디
+     * @return 회원번호
      */
     Long generateMemberNumber();
 
     /**
      * 회원가입
-     *
      * @param member 가입정보
-     * @return 회원아이디
+     * @return 회원번호
      */
     Long join(Member member);
+
+    /**
+     * 아이디 찾기
+     *
+     * @param memName  이름
+     * @param memEmail 이메일
+     * @return 회원아이디
+     */
+//    String findId(String memName, String memEmail);
 
     /**
      * 로그인
@@ -29,15 +37,17 @@ public interface MemberDAO {
     Optional<Member> login(String memId, String memPassword);
 
     /**
-     * 조회 by 회원아이디
-     * @param memNumber 회원아이디
+     * 조회 by 회원번호
+     * @param memNumber 회원번호
      * @return 회원정보
      */
     Member findByMemNumber(Long memNumber);
 
+    Member findByMemNameAndMemEmail(String memName, String memEmail);
+
     /**
      * 수정
-     * @param memNumber 아이디
+     * @param memNumber 회원번호
      * @param member  수정할 정보
      * @return 수정건수
      */
