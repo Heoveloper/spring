@@ -1,4 +1,4 @@
-package com.kh.great3.web;
+package com.kh.great3.web.controller;
 
 import com.kh.great3.domain.Member;
 import com.kh.great3.domain.svc.MemberSVC;
@@ -30,7 +30,7 @@ public class HomeController {
 
         String view = null;
         HttpSession session = request.getSession(false);
-        view = (session == null) ? "main" : "mainMember" ;
+        view = (session == null) ? "member/main" : "member/mainMember" ;
 
         return view;
 //        return "main";
@@ -41,7 +41,7 @@ public class HomeController {
     public String join(Model model) {
         model.addAttribute("join", new Join());
 
-        return "join";    //회원가입 화면
+        return "member/join";    //회원가입 화면
     }
 
     //회원가입 처리
@@ -94,11 +94,10 @@ public class HomeController {
     //회원가입 완료 화면
     @GetMapping("/joinComplete")
     public String joinComplete(
-            @ModelAttribute("join") JoinComplete joinComplete,
-            MemberVO memberVO
+            @ModelAttribute("join") JoinComplete joinComplete
     ) {
 
-        return "joinComplete";    //회원가입 화면
+        return "member/joinComplete";    //회원가입 화면
     }
 
     //아이디 찾기 화면
@@ -106,7 +105,7 @@ public class HomeController {
     public String findId(Model model) {
         model.addAttribute("findId", new findId());
 
-        return "findId";
+        return "member/findId";
     }
 
     //비밀번호 찾기 화면
@@ -114,7 +113,7 @@ public class HomeController {
     public String findPw(Model model) {
         model.addAttribute("findPw", new findPw());
 
-        return "findPw";
+        return "member/findPw";
     }
 
     //비밀번호 재설정 화면
@@ -122,14 +121,14 @@ public class HomeController {
     public String resetPw(Model model) {
         model.addAttribute("resetPw", new resetPw());
 
-        return "resetPw";
+        return "member/resetPw";
     }
 
     //로그인 화면
     @GetMapping("/login")
     public String login(@ModelAttribute("login") Login login){
 
-        return "login";
+        return "member/login";
     }
 
     //로그인 처리
@@ -143,7 +142,7 @@ public class HomeController {
         //기본 검증
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
-            return "login";
+            return "member/login";
         }
 
         //회원유무
@@ -151,7 +150,7 @@ public class HomeController {
         log.info("member = {}", member);
         if(member.isEmpty()){
             bindingResult.reject(null,"회원정보가 없습니다.");
-            return "login";
+            return "member/login";
         }
 
         //세션에 회원정보 저장
