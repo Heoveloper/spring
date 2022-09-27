@@ -137,13 +137,13 @@
                     <div class="pwc">
                         <i class="fa-solid fa-key"></i>
                         <i class="bar"></i>
-                        <input type="password" placeholder="비밀번호를 입력하세요." />
+                        <input id="aa" type="password" placeholder="비밀번호를 입력하세요." />
                     </div>
                     <div class="location-choice">
                         <a href="javascript:close();">
                             돌아가기
                         </a>
-                        <a href="main_nonmem.html">
+                        <a class="exit-btn" href="#" onclick="return false;">
                             탈퇴
                         </a>
                     </div>
@@ -152,5 +152,55 @@
         </div>
         <!-- //모달 팝업 -->
     </div>
+
+    <script>
+        const $exitBtn = document.querySelector('.exit-btn');
+
+        $exitBtn.addEventListener('click', e => {
+
+            const password = aa.value;
+            exit(password);
+
+            console.log(memPassword);
+        });
+
+        //회원탈퇴 함수
+        function exit(password){
+          const url = `/api/member/exit`;
+          const data = { "memPassword" : password };
+          fetch(url, {
+            method:'DELETE',
+            headers:{
+              'Accept':'application/json',
+              'Content-type': 'application/json'
+            },
+          }).then(res => res.json())
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+        }
+
+        function findId(name, email) {
+            const url = `/api/member/findId`;
+            const data = { "memName" : name, "memEmail" : email };
+            fetch(url, {
+                method:'POST',
+                headers:{
+                  'Accept':'application/json',
+                  'Content-type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(res => res.json())
+              .then(res => {
+                console.log(res);
+                if (res.header.rtcd == '00') {
+                    res.data[1] = res.data[1].substr(0, 10);
+                    $spanId.textContent = res.data[0];
+                    $spanReg.textContent = res.data[1];
+                } else {
+                    console.log(res);
+                }
+              }).catch(err => console.log(err));
+        }
+    </script>
 </body>
 </html>

@@ -1,88 +1,76 @@
-package com.kh.great3.domain.svc;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Service;
-
-import javax.mail.Message.RecipientType;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.Random;
-
-@Service
-public class EmailSVCImpl implements EmailSVC {
-
-    @Autowired
-    JavaMailSender emailSender;
-
-    public static final String ePw = createKey();
-
-    private MimeMessage createMessage(String to)throws Exception{
-        System.out.println("보내는 대상 : "+ to);
-        System.out.println("인증 번호 : "+ePw);
-        MimeMessage  message = emailSender.createMimeMessage();
-
-        message.addRecipients(RecipientType.TO, to);//보내는 대상
-        message.setSubject("Babble회원가입 이메일 인증");//제목
-
-        String msgg="";
-        msgg+= "<div style='margin:100px;'>";
-        msgg+= "<h1> 안녕하세요 Babble입니다. </h1>";
-        msgg+= "<br>";
-        msgg+= "<p>아래 코드를 회원가입 창으로 돌아가 입력해주세요<p>";
-        msgg+= "<br>";
-        msgg+= "<p>감사합니다!<p>";
-        msgg+= "<br>";
-        msgg+= "<div align='center' style='border:1px solid black; font-family:verdana';>";
-        msgg+= "<h3 style='color:blue;'>회원가입 인증 코드입니다.</h3>";
-        msgg+= "<div style='font-size:130%'>";
-        msgg+= "CODE : <strong>";
-        msgg+= ePw+"</strong><div><br/> ";
-        msgg+= "</div>";
-        message.setText(msgg, "utf-8", "html");//내용
-        message.setFrom(new InternetAddress("properties email쓰세용!","Babble"));//보내는 사람
-
-        return message;
-    }
-
-    public static String createKey() {
-        StringBuffer key = new StringBuffer();
-        Random rnd = new Random();
-
-        for (int i = 0; i < 8; i++) { // 인증코드 8자리
-            int index = rnd.nextInt(3); // 0~2 까지 랜덤
-
-            switch (index) {
-                case 0:
-                    key.append((char) ((int) (rnd.nextInt(26)) + 97));
-                    //  a~z  (ex. 1+97=98 => (char)98 = 'b')
-                    break;
-                case 1:
-                    key.append((char) ((int) (rnd.nextInt(26)) + 65));
-                    //  A~Z
-                    break;
-                case 2:
-                    key.append((rnd.nextInt(10)));
-                    // 0~9
-                    break;
-            }
-        }
-
-        return key.toString();
-    }
-    @Override
-    public String sendSimpleMessage(String to)throws Exception {
-        // TODO Auto-generated method stub
-        MimeMessage message = createMessage(to);
-        try{//예외처리
-            emailSender.send(message);
-        }catch(MailException es){
-            es.printStackTrace();
-            throw new IllegalArgumentException();
-        }
-        return ePw;
-    }
-
-}
-
+//package com.kh.great3.domain.svc;
+//
+//import com.kh.great3.domain.Member;
+//import com.kh.great3.domain.dao.MemberDAO;
+//import lombok.RequiredArgsConstructor;
+//import lombok.extern.slf4j.Slf4j;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.mail.SimpleMailMessage;
+//import org.springframework.mail.javamail.JavaMailSender;
+//import org.springframework.stereotype.Service;
+//
+//@Slf4j
+//@Service
+//@RequiredArgsConstructor
+////@ComponentScan(basePackages = {"com.kh.great3.domain.Member"})
+////@SpringBootApplication(scanBasePackages = {"com.kh.great3.domain.Member"})
+//public class EmailSVCImpl implements EmailSVC {
+//
+//    @Autowired
+//    private final MemberDAO memberDAO;
+//    @Autowired
+//    private final Member member;
+//    @Autowired
+//    private final JavaMailSender mailSender;
+//
+//    String sender = "altruism_tap@naver.com";
+//
+//
+//    @Override
+//    public String sendForgotPassword(String memId, String memEmail) {
+//
+//        Member findedMember = memberDAO.findByMemIdAndMemEmail(memId, memEmail);
+//
+//
+//        if(findedMember == null){
+//            try {
+//                throw new UserNotFoundException("User not found with email : " + findedMember.getMemEmail());
+//            } catch (UserNotFoundException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }else{
+//            String tempPassword = getTempPassword();
+//            member.setMemPassword(tempPassword);
+//
+//            //메세지를 생성하고 보낼 메일 설정 저장
+//            SimpleMailMessage message = new SimpleMailMessage();
+//            message.setTo(memEmail);
+//            message.setFrom(sender);
+//            message.setSubject(member.getMemName() + "님, 임시비밀번호를 발급했습니다!");
+//            message.setText("Hello" + member.getMemName() + "님! 임시비밀번호를 드립니다. 그러나 안전하지 않으니 속히 비밀번호를 변경하세요. 임시비밀번호: " + tempPassword);
+//            mailSender.send(message);
+//            return "Temporary password sent to your email.";
+//        }
+//    }
+//
+//    //임시 비밀번호 발급
+//    @Override
+//    public String getTempPassword(){
+//        char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+//                'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+//
+//        String str = "";
+//
+//        int idx = 0;
+//        for (int i = 0; i < 10; i++) {
+//            idx = (int) (charSet.length * Math.random());
+//            str += charSet[idx];
+//        }
+//        return str;
+//    }
+//
+//    private class UserNotFoundException extends Throwable {
+//        public UserNotFoundException(String s) {
+//        }
+//    }
+//}

@@ -28,6 +28,14 @@ public interface MemberDAO {
     Member findByMemNameAndMemEmail(String memName, String memEmail);
 
     /**
+     * 비밀번호 찾기
+     * @param memId
+     * @param memEmail
+     * @return
+     */
+    Member findByMemIdAndMemEmail(String memId, String memEmail);
+
+    /**
      * 로그인
      * @param memId 아이디
      * @param memPassword 비밀번호
@@ -50,12 +58,13 @@ public interface MemberDAO {
      */
     Long update(Long memNumber, Member member);
 
+
     /**
      * 탈퇴
-     * @param memNumber 아이디
+     * @param memNumber 회원번호
      * @return 삭제건수
      */
-    Long delete(Long memNumber);
+    Long exit(Long memNumber);
 
     /**
      * 목록

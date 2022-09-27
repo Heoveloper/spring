@@ -22,6 +22,14 @@ public interface MemberSVC {
     Member findByMemNameAndMemEmail(String memName, String memEmail);
 
     /**
+     * 비밀번호 찾기
+     * @param memId
+     * @param memEmail
+     * @return
+     */
+    Member findByMemIdAndMemEmail(String memId, String memEmail);
+
+    /**
      * 로그인
      * @param memId 아이디
      * @param memPassword 패스워드
@@ -31,14 +39,14 @@ public interface MemberSVC {
 
     /**
      * 조회 by 회원아이디
-     * @param memNumber 회원아이디
+     * @param memNumber 회원번호
      * @return 회원정보
      */
     Member findByMemNumber(Long memNumber);
 
     /**
      * 수정
-     * @param memNumber 회원아이디
+     * @param memNumber 회원번호
      * @param member  수정할 정보
      * @return 수정건수
      */
@@ -46,10 +54,10 @@ public interface MemberSVC {
 
     /**
      * 탈퇴
-     * @param memNumber 회원아이디
+     * @param memNumber 회원번호
      * @return 삭제건수
      */
-    Long delete(Long memNumber);
+    Long exit(Long memNumber);
 
     /**
      * 목록

@@ -25,6 +25,7 @@ import java.util.Optional;
 public class HomeController {
 
     private final MemberSVC memberSVC;
+//    private final EmailSVCImpl emailSVC;
 
     @GetMapping
     public String home(HttpServletRequest request) {
@@ -34,7 +35,6 @@ public class HomeController {
         view = (session == null) ? "member/main" : "member/mainMember" ;
 
         return view;
-//        return "main";
     }
 
     //회원가입 화면
@@ -111,11 +111,39 @@ public class HomeController {
 
     //비밀번호 찾기 화면
     @GetMapping("/findPw")
-    public String findPw(Model model) {
+    public String findPw(
+            @PathVariable("memNumber") Long memNumber,
+            Model model
+    ) {
+
+        Member findedMember = memberSVC.findByMemNumber(memNumber);
+
+        FindPw findPw = new FindPw();
+        findPw.setMemId(findedMember.getMemId());
+        findPw.setMemEmail(findedMember.getMemEmail());
+
         model.addAttribute("findPw", new FindPw());
 
         return "member/findPw";
     }
+
+    //비밀번호 찾기 처리
+//    @PostMapping("/findPw")
+//    public String findPw(
+//            @Valid @ModelAttribute("findPw") FindPw findPw,
+//            BindingResult bindingResult
+//    ) {
+//        //기본 검증
+////        if (bindingResult.hasErrors()) {
+////            log.info("errors = {}", bindingResult);
+////            return "member/findPw";
+////        }
+//
+//        emailSVC.sendForgotPassword(findPw.getMemId(), findPw.getMemEmail());
+//
+//        return "redirect:/login";
+//
+//    }
 
     //비밀번호 재설정 화면
     @GetMapping("/resetPw")

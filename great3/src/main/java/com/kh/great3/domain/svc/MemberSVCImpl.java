@@ -44,6 +44,18 @@ public class MemberSVCImpl implements MemberSVC {
     }
 
     /**
+     * 비밀번호 찾기
+     *
+     * @param memId
+     * @param memEmail
+     * @return
+     */
+    @Override
+    public Member findByMemIdAndMemEmail(String memId, String memEmail) {
+        return memberDAO.findByMemNameAndMemEmail(memId, memEmail);
+    }
+
+    /**
      * 로그인
      *
      * @param memId       아이디
@@ -83,12 +95,12 @@ public class MemberSVCImpl implements MemberSVC {
     /**
      * 탈퇴
      *
-     * @param memNumber 회원아이디
+     * @param memNumber 회원번호
      * @return 삭제건수
      */
     @Override
-    public Long delete(Long memNumber) {
-        Long cnt = memberDAO.delete(memNumber);
+    public Long exit(Long memNumber) {
+        Long cnt = memberDAO.exit(memNumber);
         log.info("삭제건수={}", cnt);
         return cnt;
     }

@@ -27,34 +27,36 @@
                 <div class="find-pw-title">
                     <h2>비밀번호 찾기</h2>
                 </div>
-                <div class="input-data content">
-                    <div class="wrap-id">
-                        <div class="id">
-                            <i class="icon__id fa-regular fa-user"></i>
-                            <i class="bar__id"></i>
-                            <input type="text" placeholder="아이디를 입력하세요." />
+                <form action="" method="POST" th:object="${findPw}">
+                    <div class="input-data content">
+                        <div class="wrap-id">
+                            <div class="id">
+                                <i class="icon__id fa-regular fa-user"></i>
+                                <i class="bar__id"></i>
+                                <input type="text" th:field="*{memId}" placeholder="아이디를 입력하세요." />
+                            </div>
+                        </div>
+                        <div class="wrap-email">
+                            <div class="email">
+                                <i class="icon__email fa-regular fa-envelope"></i>
+                                <i class="bar__email"></i>
+                                <input type="email" th:field="*{memEmail}" placeholder="이메일 주소를 입력하세요." />
+                            </div>
+                            <button class="btn send-btn">인증번호 발송</button>
+                        </div>
+                        <div class="wrap-certify">
+                            <div class="certify">
+                                <i class="icon__certify fa-solid fa-check"></i>
+                                <i class="bar__certify"></i>
+                                <input type="text" placeholder="인증번호를 입력하세요." />
+                            </div>
+                            <button class="btn certify-btn">인증번호 확인</button>
                         </div>
                     </div>
-                    <div class="wrap-email">
-                        <div class="email">
-                            <i class="icon__email fa-regular fa-envelope"></i>
-                            <i class="bar__email"></i>
-                            <input type="email" placeholder="이메일 주소를 입력하세요." />
-                        </div>
-                        <button class="btn send-btn">인증번호 발송</button>
+                    <div class="wrap-confirm-btn content">
+                        <button type="submit" class="btn confirm-btn">확인</button>
                     </div>
-                    <div class="wrap-certify">
-                        <div class="certify">
-                            <i class="icon__certify fa-solid fa-check"></i>
-                            <i class="bar__certify"></i>
-                            <input type="text" placeholder="인증번호를 입력하세요." />
-                        </div>
-                        <button class="btn certify-btn">인증번호 확인</button>
-                    </div>
-                </div>
-                <div class="wrap-confirm-btn content">
-                    <button class="btn confirm-btn" onclick="location.href='/member/reset_pw.html'">확인</button>
-                </div>
+                </form>
             </div>
         </main>
         <!-- //main -->
