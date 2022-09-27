@@ -21,12 +21,11 @@ public interface MemberDAO {
 
     /**
      * 아이디 찾기
-     *
-     * @param memName  이름
+     * @param memName 이름
      * @param memEmail 이메일
-     * @return 회원아이디
+     * @return 아이디, 등록일자
      */
-//    String findId(String memName, String memEmail);
+    Member findByMemNameAndMemEmail(String memName, String memEmail);
 
     /**
      * 로그인
@@ -42,8 +41,6 @@ public interface MemberDAO {
      * @return 회원정보
      */
     Member findByMemNumber(Long memNumber);
-
-    Member findByMemNameAndMemEmail(String memName, String memEmail);
 
     /**
      * 수정

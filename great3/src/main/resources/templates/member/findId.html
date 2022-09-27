@@ -104,7 +104,9 @@
               .then(res => {
                 console.log(res);
                 if (res.header.rtcd == '00') {
-                   $spanId.textContent = res.data;
+                    res.data[1] = res.data[1].substr(0, 10);
+                    $spanId.textContent = res.data[0];
+                    $spanReg.textContent = res.data[1];
                 } else {
                     console.log(res);
                 }

@@ -34,14 +34,14 @@ public class MemberSVCImpl implements MemberSVC {
     /**
      * 아이디 찾기
      *
-     * @param memName  이름
+     * @param memName 이름
      * @param memEmail 이메일
-     * @return 회원아이디
+     * @return 아이디, 등록일자
      */
-//    @Override
-//    public Member findId(String memName, String memEmail) {
-//        return memberDAO.findId(memName, memEmail);
-//    }
+    @Override
+    public Member findByMemNameAndMemEmail(String memName, String memEmail) {
+        return memberDAO.findByMemNameAndMemEmail(memName, memEmail);
+    }
 
     /**
      * 로그인
@@ -64,11 +64,6 @@ public class MemberSVCImpl implements MemberSVC {
     @Override
     public Member findByMemNumber(Long memNumber) {
         return memberDAO.findByMemNumber(memNumber);
-    }
-
-    @Override
-    public Member findByMemNameAndMemEmail(String memName, String memEmail) {
-        return memberDAO.findByMemNameAndMemEmail(memName, memEmail);
     }
 
     /**
