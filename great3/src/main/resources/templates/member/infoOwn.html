@@ -236,7 +236,7 @@
                         <a href="javascript:close();">
                             돌아가기
                         </a>
-                        <a href="main_nonmem.html">
+                        <a class="exit-btn" href="#" onclick="return false;">
                             탈퇴
                         </a>
                     </div>
@@ -299,6 +299,40 @@
         	}).open();
 		});
 	</script>
+    <script>
+        const $exitBtn = document.querySelector('.exit-btn');
+        const memNumber = [[${info.memNumber}]];
+
+        $exitBtn.addEventListener('click', e => {
+            //회원탈퇴 경고창 노출
+            if(!confirm('탈퇴하시겠습니까?')) return;
+
+            //회원탈퇴
+            exit(memNumber);
+
+            //회원탈퇴 완료창 노출
+            alert('탈퇴되었습니다.');
+
+            //회원탈퇴 완료 후 메인화면으로 이동
+            window.location.href = 'http://localhost:8080/';
+        });
+
+        //회원탈퇴 함수
+        function exit(memNumber){
+          const url = `/api/member/exit`;
+          const data = { "memNumber" : memNumber };
+          fetch(url, {
+            method:'DELETE',
+            headers:{
+              'Accept':'application/json',
+              'Content-type': 'application/json'
+            },
+            body:JSON.stringify(data)
+          }).then(res => res.json())
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+        }
+    </script>
     <!-- //script -->
 </body>
 </html>

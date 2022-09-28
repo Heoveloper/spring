@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -47,17 +49,23 @@ public class ApiMemberController {
 
     //회원탈퇴
     @DeleteMapping("/exit")
-    public ApiResponse<Member> exit(@RequestBody Info info) {
+    public ApiResponse<Object> exit(@RequestBody Info info, HttpServletRequest request) {
 
-        Member findedMember = memberSVC.findByMemNumber(info.getMemNumber());
-        if(findedMember == null){
-            return ApiResponse.createApiResMsg("99","탈퇴하고자 하는 회원이 존재하지 않습니다.", null);
+//        Member findedMember = memberSVC.findByMemNumber(info.getMemNumber());
+
+
+//        if(findedMember == null){
+//            return ApiResponse.createApiResMsg("99","탈퇴하고자 하는 회원이 존재하지 않습니다.", null);
+//        }
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
         }
 
-        memberSVC.exit(findedMember.getMemNumber());
+        Long deletedRow = memberSVC.exit(info.getMemNumber());
 
-        return ApiResponse.createApiResMsg("00","성공", findedMember);
-
+        return ApiResponse.createApiResMsg("00","성공", deletedRow);
 
     }
 }

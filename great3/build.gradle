@@ -35,10 +35,9 @@ dependencies {
 	//dependency for emailAuth
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
-	/* 롬복을 junit에서 사용하고자 할때 반드시 포함 */
+	//lombok fot test
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
-	/******************************************/
 }
 
 tasks.named('test') {
