@@ -26,6 +26,10 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+# User-specific configurations
+.idea/vcs.xml
+.idea/workspace.xml
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
